@@ -1,41 +1,299 @@
-{
-  "_comment": "Baseline of Tuas Power figures as verified 24 Aug 2026 against Tuas's own factsheets and campaign pages. The tripwire compares live values against this file. When a change is confirmed and the site is updated, update this file too — otherwise the tripwire keeps firing on the same change.",
-  "verified_on": "2026-08-24",
+#!/usr/bin/env python3
+"""
+Tuas Power rates tripwire.
 
-  "factsheet_versions": {
-    "_comment": "Tuas encodes date and ex-GST rate in the PDF filename, e.g. powerfix_36_20260803(269.7).pdf = 3 Aug 2026, 26.97c ex-GST. A filename change is the single most reliable repricing signal.",
-    "_bootstrap": "A value of \"unknown\" means: track this plan, but adopt whatever the first run observes and write it back here. Only powerfix_36 was confirmed by hand on 24 Aug 2026 (26.97c ex-GST / 29.40c inc GST, factsheet dated 3 Aug 2026). The rest self-baseline on the first run so the tripwire does not fire forever on plans whose exact filename was never verified.",
-    "powerfix_36": "20260803(269.7)",
-    "powerfix_24": "unknown",
-    "powerfix_12": "unknown",
-    "powerfix_25": "unknown",
-    "powerdot_6": "unknown"
-  },
+Fetches Tuas's own plans page, campaign page and factsheet links, compares what
+it finds against watch/expected.json, and writes rates-watch.json at the repo
+root. That file is the hand-off to the Claude scheduled task, which can read
+raw.githubusercontent.com but cannot reach api.github.com.
 
-  "rates_inc_gst_cents": {
-    "PowerFIX 36": 29.40,
-    "PowerFIX 24": 29.80,
-    "PowerFIX 12": 31.00,
-    "PowerFIX 25 G+": 32.70
-  },
+Design notes, so future-you knows why it looks like this:
 
-  "campaign": {
-    "code": "ONSGDAY26",
-    "ends": "2026-08-31",
-    "rebate_powerfix_24": 120,
-    "rebate_powerfix_36": 200,
-    "signup_cap": 500,
-    "voucher_option": true
-  },
+  * It is deliberately NOT a precise scraper. Tuas encodes the effective date
+    and the ex-GST rate in each factsheet PDF filename, e.g.
+    powerfix_36_20260803(269.7).pdf. Watching those filenames is far more
+    robust than parsing rendered rate text out of their markup, which changes
+    whenever they touch the template.
+  * A fetch failure is NEVER reported as "unchanged". Silence must not look
+    like calm. Status becomes FETCH_FAILED and the run exits non-zero so
+    GitHub emails you about the broken workflow.
+  * It writes a heartbeat to rates-watch.json on every run, change or not, so
+    the Claude task can detect a tripwire that has silently stopped running.
 
-  "pacificlight_reference_inc_gst_cents": {
-    "_comment": "Not scraped — PacificLight factsheets are JavaScript-rendered. Held here so the editorial-inversion check has something to compare against. Verified by the Monday run, not by this tripwire.",
-    "Savvy Saver 36": 27.18,
-    "Savvy Saver 24": 27.50
-  },
+Standard library only, so there is nothing to install and nothing to pin.
+"""
 
-  "editorial_position": {
-    "_comment": "If Tuas ever becomes CHEAPER than PacificLight on the equivalent term, the site's two pages start contradicting each other and both need rewriting. The tripwire flags this as INVERSION, which is more urgent than an ordinary repricing.",
-    "pacificlight_is_cheaper_on_rate": true
-  }
+import json
+import os
+import re
+import sys
+import urllib.error
+import urllib.request
+from datetime import datetime, timezone
+
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+EXPECTED_PATH = os.path.join(REPO_ROOT, "watch", "expected.json")
+OUT_PATH = os.path.join(REPO_ROOT, "rates-watch.json")
+LOG_PATH = os.path.join(REPO_ROOT, "watch", "WATCHLOG.md")
+
+PAGES = {
+    "plans": "https://www.savewithtuas.com/our-electricity-plans/",
+    "promotions": "https://www.savewithtuas.com/promotions/",
+    # The campaign sub-page is where the PER-PLAN rebates live. The
+    # /promotions/ landing page only advertises the headline "up to $200",
+    # so checking rebate amounts there produces a false positive every run.
+    # URL is derived from the campaign code in expected.json.
+    "campaign": None,
 }
+
+# A real browser UA — the default urllib one gets refused by their edge.
+UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+      "(KHTML, like Gecko) Chrome/128.0 Safari/537.36")
+
+FACTSHEET_RE = re.compile(
+    r"(powerfix|powerdot)[_\-]?(\d+)[^\"'>]*?_(\d{8})\(([\d.]+)\)\.pdf",
+    re.IGNORECASE,
+)
+# Rates appear as either $0.2940 or 29.40¢ / 29.40 cents depending on the page.
+DECIMAL_RATE_RE = re.compile(r"\$?0\.(\d{4})\b")
+CENTS_RATE_RE = re.compile(r"\b(\d{2}\.\d{2})\s*(?:¢|cents?|c/kWh)", re.IGNORECASE)
+REBATE_RE = re.compile(r"\$\s?(\d{2,3})\b")
+
+
+def fetch(url):
+    req = urllib.request.Request(url, headers={
+        "User-Agent": UA,
+        "Accept": "text/html,application/xhtml+xml",
+        "Accept-Language": "en-SG,en;q=0.9",
+    })
+    with urllib.request.urlopen(req, timeout=45) as r:
+        raw = r.read()
+    return raw.decode("utf-8", errors="replace")
+
+
+def main():
+    now = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+
+    with open(EXPECTED_PATH) as fh:
+        expected = json.load(fh)
+
+    pages = dict(PAGES)
+    pages["campaign"] = ("https://www.savewithtuas.com/promotions/%s/"
+                         % expected["campaign"]["code"].lower())
+
+    html, errors = {}, []
+    campaign_page_gone = False
+    for name, url in pages.items():
+        try:
+            html[name] = fetch(url)
+        except (urllib.error.URLError, urllib.error.HTTPError, OSError) as exc:
+            if name == "campaign":
+                # Expected once the campaign ends — Tuas takes the sub-page
+                # down. That is a finding, not a broken run.
+                campaign_page_gone = True
+                html[name] = ""
+            else:
+                errors.append(f"{name} ({url}): {exc}")
+
+    if errors:
+        write_out({
+            "last_run": now,
+            "status": "FETCH_FAILED",
+            "changes": [],
+            "errors": errors,
+            "note": "Could not read Tuas's pages, so nothing was verified. "
+                    "This is NOT a clean bill of health.",
+        })
+        append_log(now, "FETCH_FAILED", "; ".join(errors))
+        print("FETCH FAILED:\n  " + "\n  ".join(errors), file=sys.stderr)
+        sys.exit(1)
+
+    blob = "\n".join(html.values())
+    changes = []
+
+    # --- 1. Factsheet versions: the primary repricing signal -----------------
+    found = {}
+    for plan, term, date, rate in FACTSHEET_RE.findall(blob):
+        found[f"{plan.lower()}_{term}"] = f"{date}({rate})"
+
+    exp_fs = {k: v for k, v in expected["factsheet_versions"].items()
+              if not k.startswith("_")}
+
+    # Self-baselining: any plan listed as "unknown" adopts whatever the first
+    # run observes, and expected.json is rewritten. Without this, a plan we
+    # track but whose current version we never confirmed by hand would fire
+    # every single day forever, and a tripwire that always cries wolf is worse
+    # than none. Informational only — it never sets status CHANGED.
+    baselined = {}
+    for key, exp_version in list(exp_fs.items()):
+        if exp_version in (None, "", "unknown") and key in found:
+            baselined[key] = found[key]
+            expected["factsheet_versions"][key] = found[key]
+            exp_fs[key] = found[key]
+    if baselined:
+        with open(EXPECTED_PATH, "w") as fh:
+            json.dump(expected, fh, indent=2)
+            fh.write("\n")
+
+    # A plan whose version was never confirmed AND which we cannot see is not
+    # evidence of anything — most likely the key guessed here never matched
+    # their filename. Record it, don't cry wolf about it.
+    not_yet_seen = [k for k, v in exp_fs.items()
+                    if v in (None, "", "unknown") and k not in found]
+
+    for key, exp_version in exp_fs.items():
+        if key in baselined or key in not_yet_seen:
+            continue
+        live = found.get(key)
+        if live is None:
+            changes.append({
+                "field": f"factsheet {key}",
+                "was": exp_version,
+                "now": "NOT FOUND on plans page",
+                "severity": "investigate",
+                "note": "Either the plan was withdrawn or their markup changed. "
+                        "Check by hand before trusting this.",
+            })
+        elif live != exp_version:
+            was_rate = version_to_inc_gst(exp_version)
+            now_rate = version_to_inc_gst(live)
+            changes.append({
+                "field": f"factsheet {key}",
+                "was": exp_version,
+                "now": live,
+                "was_rate_inc_gst": was_rate,
+                "now_rate_inc_gst": now_rate,
+                "severity": "repriced",
+            })
+
+    for key, live in sorted(found.items()):
+        if key not in exp_fs:
+            changes.append({
+                "field": f"factsheet {key}",
+                "was": "(not tracked)",
+                "now": live,
+                "severity": "new_plan",
+            })
+
+    # --- 2. Campaign still live? -------------------------------------------
+    camp = expected["campaign"]
+    promo = html["promotions"]
+    code_present = camp["code"].lower() in promo.lower() and not campaign_page_gone
+    if not code_present:
+        changes.append({
+            "field": "campaign " + camp["code"],
+            "was": "live",
+            "now": "no longer on the promotions page",
+            "severity": "campaign_ended",
+            "note": "The $%s/$%s rebates and the 'up to S$220' claims on the "
+                    "Tuas page are now stale. Needs a prose rewrite, not a "
+                    "find-and-replace." % (camp["rebate_powerfix_24"],
+                                           camp["rebate_powerfix_36"]),
+        })
+
+    # Look for per-plan rebates across BOTH the landing page and the campaign
+    # sub-page — the landing page carries only the headline figure.
+    rebates_seen = {int(m) for m in REBATE_RE.findall(promo + html["campaign"])}
+    for label, amount in (("PowerFIX 24", camp["rebate_powerfix_24"]),
+                          ("PowerFIX 36", camp["rebate_powerfix_36"])):
+        if code_present and amount not in rebates_seen:
+            changes.append({
+                "field": f"rebate {label}",
+                "was": f"${amount}",
+                "now": "not found on promotions page",
+                "severity": "investigate",
+                "observed_amounts": sorted(rebates_seen),
+            })
+
+    # --- 3. Editorial inversion: the one that changes the site's argument ---
+    pl = expected["pacificlight_reference_inc_gst_cents"]
+    for key, live in found.items():
+        if not key.startswith("powerfix"):
+            continue
+        rate = version_to_inc_gst(live)
+        term = key.split("_")[-1]
+        ref = pl.get(f"Savvy Saver {term}")
+        if rate and ref and rate < ref:
+            changes.append({
+                "field": f"EDITORIAL INVERSION on {term}-month",
+                "was": f"Tuas dearer (PacificLight {ref}c)",
+                "now": f"Tuas now CHEAPER at {rate}c",
+                "severity": "inversion",
+                "note": "Both pages now argue their retailer is best. The "
+                        "site contradicts itself until rewritten. Escalate.",
+            })
+
+    status = "CHANGED" if changes else "UNCHANGED"
+    payload = {
+        "last_run": now,
+        "status": status,
+        "expected_baseline": expected.get("verified_on"),
+        "changes": changes,
+        "baselined_this_run": baselined,
+        "tracked_but_never_seen": not_yet_seen,
+        "observed": {
+            "factsheets": found,
+            "campaign_code_present": code_present,
+            "campaign_page_reachable": not campaign_page_gone,
+            # Diagnostic: every PDF link seen, so the real filenames for plans
+            # we could not key correctly (25 G+, PowerDOT 6) show up here and
+            # can be added to expected.json properly.
+            "all_pdf_links": sorted({m for m in
+                                     re.findall(r"[\w/%.\-()+]+\.pdf", blob)})[:40],
+            "rebate_amounts_on_promotions_page": sorted(rebates_seen),
+            "cents_rates_seen": sorted({float(x) for x in
+                                        CENTS_RATE_RE.findall(blob)}),
+            "decimal_rates_seen": sorted({round(int(x) / 10000, 4) for x in
+                                          DECIMAL_RATE_RE.findall(blob)}),
+        },
+        "sources": PAGES,
+    }
+    write_out(payload)
+    append_log(now, status,
+               "; ".join(f"{c['field']}: {c['was']} -> {c['now']}"
+                         for c in changes) or "no change")
+
+    print(f"status={status}  changes={len(changes)}")
+    print(json.dumps(payload["observed"], indent=2))
+    for c in changes:
+        print(f"  [{c['severity']}] {c['field']}: {c['was']} -> {c['now']}")
+
+    # Non-zero exit surfaces it in the Actions UI and emails you, but only for
+    # things that genuinely need a human. A plain repricing is handled by the
+    # issue and by the Claude task.
+    if any(c["severity"] == "inversion" for c in changes):
+        sys.exit(2)
+
+
+def version_to_inc_gst(version):
+    """'20260803(269.7)' -> 29.40  (ex-GST tenths of a cent, plus 9% GST)."""
+    m = re.search(r"\(([\d.]+)\)", version or "")
+    if not m:
+        return None
+    try:
+        return round(float(m.group(1)) / 10 * 1.09, 2)
+    except ValueError:
+        return None
+
+
+def write_out(payload):
+    with open(OUT_PATH, "w") as fh:
+        json.dump(payload, fh, indent=2)
+        fh.write("\n")
+
+
+def append_log(now, status, detail):
+    new = not os.path.exists(LOG_PATH)
+    with open(LOG_PATH, "a") as fh:
+        if new:
+            fh.write("# Tuas rates watch log\n\n"
+                     "Appended by `.github/workflows/rates-watch.yml`. Every "
+                     "run writes a line, including quiet ones — a daily commit "
+                     "keeps GitHub from auto-disabling the schedule after 60 "
+                     "days of inactivity.\n\n"
+                     "| run (UTC) | status | detail |\n|---|---|---|\n")
+        fh.write(f"| {now} | {status} | {detail} |\n")
+
+
+if __name__ == "__main__":
+    main()
