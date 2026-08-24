@@ -1,5 +1,5 @@
 {
-  "_comment": "Baseline of Tuas Power figures as verified 24 Aug 2026 against Tuas's own factsheets and campaign pages. The tripwire compares live values against this file. When a change is confirmed and the site is updated, update this file too \u2014 otherwise the tripwire keeps firing on the same change.",
+  "_comment": "Baseline of Tuas Power figures as verified 24 Aug 2026 against Tuas's own factsheets and campaign pages. The tripwire compares live values against this file. When a change is confirmed and the site is updated, update this file too — otherwise the tripwire keeps firing on the same change.",
   "verified_on": "2026-08-24",
   "factsheet_versions": {
     "_comment": "Tuas encodes date and ex-GST rate in the PDF filename, e.g. powerfix_36_20260803(269.7).pdf = 3 Aug 2026, 26.97c ex-GST. A filename change is the single most reliable repricing signal.",
@@ -14,7 +14,8 @@
     "PowerFIX 36": 29.4,
     "PowerFIX 24": 29.8,
     "PowerFIX 12": 31.0,
-    "PowerFIX 25 G+": 32.7
+    "PowerFIX 25 G+": 32.7,
+    "_comment": "Tuas Power plans, GST-inclusive, from their 3 Aug 2026 factsheets."
   },
   "campaign": {
     "code": "ONSGDAY26",
@@ -25,12 +26,13 @@
     "voucher_option": true
   },
   "pacificlight_reference_inc_gst_cents": {
-    "_comment": "Not scraped \u2014 PacificLight factsheets are JavaScript-rendered. Held here so the editorial-inversion check has something to compare against. Verified by the Monday run, not by this tripwire.",
-    "Savvy Saver 36": 27.18,
-    "Savvy Saver 24": 27.5
+    "_comment": "PacificLight repriced on 20 Aug 2026 — Savvy Saver 24: 27.50 -> 29.80, Savvy Saver 36: 27.18 -> 29.40 — read from their own factsheets on 24 Aug 2026. Their factsheet LISTING page IS readable and the slugs encode plan+date, so a real PacificLight tripwire is feasible; see pacificlight_discovery in rates-watch.json. Until that is built, these two numbers are maintained by hand.",
+    "Savvy Saver 36": 29.4,
+    "Savvy Saver 24": 29.8
   },
   "editorial_position": {
-    "_comment": "If Tuas ever becomes CHEAPER than PacificLight on the equivalent term, the site's two pages start contradicting each other and both need rewriting. The tripwire flags this as INVERSION, which is more urgent than an ordinary repricing.",
-    "pacificlight_is_cheaper_on_rate": true
+    "_comment": "As at 24 Aug 2026 NO retailer is cheapest on rate: all six sit at 29.80c on 24 months, and PacificLight, Tuas and Senoko are all 29.40c on 36. The site no longer argues PacificLight is cheapest — it argues the rebates and perks decide. An INVERSION now means Tuas becoming strictly cheaper than PacificLight, not merely equal to it.",
+    "pacificlight_is_cheaper_on_rate": false,
+    "rates_converged": true
   }
 }
