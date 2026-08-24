@@ -248,6 +248,14 @@ def main():
         },
         "sources": PAGES,
     }
+    # Diagnostic only — isolated so a PacificLight failure can never affect
+    # the Tuas verdict or the exit code.
+    try:
+        payload["pacificlight_discovery"] = discover_pacificlight()
+    except Exception as exc:                            # noqa: BLE001
+        payload["pacificlight_discovery"] = {
+            "error": f"{type(exc).__name__}: {exc}"[:200]}
+
     write_out(payload)
     append_log(now, status,
                "; ".join(f"{c['field']}: {c['was']} -> {c['now']}"
@@ -258,11 +266,76 @@ def main():
     for c in changes:
         print(f"  [{c['severity']}] {c['field']}: {c['was']} -> {c['now']}")
 
+    print("\n--- PacificLight discovery (diagnostic, affects nothing) ---")
+    print(json.dumps(payload.get("pacificlight_discovery", {}), indent=2)[:4000])
+
     # Non-zero exit surfaces it in the Actions UI and emails you, but only for
     # things that genuinely need a human. A plain repricing is handled by the
     # issue and by the Claude task.
     if any(c["severity"] == "inversion" for c in changes):
         sys.exit(2)
+
+
+PL_PAGES = {
+    "pl_home": "https://www.pacificlight.com.sg/",
+    "pl_factsheets": "https://www.pacificlight.com.sg/support/factsheet",
+    "pl_residential": "https://www.pacificlight.com.sg/home/residential-plans",
+}
+
+
+def discover_pacificlight():
+    """TEMPORARY diagnostic. Delete once a real PacificLight check is built.
+
+    PacificLight's factsheet pages are JavaScript-rendered, so a plain fetch
+    returns an empty shell. But their factsheet URLs encode the plan AND the
+    date in the slug — `05-savvy-saver-24-8-may-2026` — which is the same
+    trick that makes the Tuas check reliable. If those slugs turn out to be
+    reachable without a browser, a PacificLight tripwire costs one fetch.
+
+    This function only LOOKS and REPORTS. It never contributes to `changes`
+    and never sets status CHANGED, so it cannot raise a false alarm while we
+    are still learning the shape of their site. Any failure here is swallowed:
+    the Tuas check is the job, and this must not be able to break it.
+    """
+    out = {}
+    for name, url in PL_PAGES.items():
+        try:
+            html = fetch(url)
+        except Exception as exc:                        # noqa: BLE001
+            out[name] = {"error": f"{type(exc).__name__}: {exc}"[:200]}
+            continue
+        low = html.lower()
+        out[name] = {
+            "bytes": len(html),
+            # Slugs are the prize: plan + factsheet date, like Tuas filenames.
+            "factsheet_slugs": sorted(set(
+                re.findall(r"factsheet[\w-]*detail/([\w\-.%]+)", html)))[:30],
+            # If the rates come from an endpoint, we can read that directly
+            # instead of rendering their page.
+            "api_paths": sorted({u for u in re.findall(
+                r"[\"'](/[\w\-/]*api[\w\-/]*)[\"']", html)})[:20],
+            "json_urls": sorted({u for u in re.findall(
+                r"https?://[\w.\-/]+\.json\b", html)})[:20],
+            # Server-rendered payload would mean the data is already in the
+            # HTML, just not in the visible markup.
+            "ssr_markers": [m for m in ("__NEXT_DATA__", "__NUXT__",
+                                        "__INITIAL_STATE__",
+                                        "application/ld+json",
+                                        "application/json")
+                            if m in html],
+            "script_srcs": sorted({u for u in re.findall(
+                r"<script[^>]+src=[\"']([^\"']+)", html)})[:15],
+            "decimal_rates_seen": sorted({round(int(x) / 10000, 4) for x in
+                                          DECIMAL_RATE_RE.findall(html)})[:20],
+            "cents_rates_seen": sorted({float(x) for x in
+                                        CENTS_RATE_RE.findall(html)})[:20],
+            "mentions_savvy_saver": low.count("savvy saver"),
+            # A big page that never says "savvy saver" and carries no rates is
+            # the signature of a shell that renders client-side.
+            "looks_like_js_shell": low.count("savvy saver") == 0
+            and not DECIMAL_RATE_RE.search(html),
+        }
+    return out
 
 
 def version_to_inc_gst(version):
