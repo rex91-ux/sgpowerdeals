@@ -1,0 +1,26 @@
+{
+  // ⚠️ REPLACE "PUT-WORKER-NAME-HERE" with the EXACT Worker name Cloudflare
+  // shows at the top of the project page — the one already serving
+  // sgpowerdeals.com. If this name does not match, `wrangler deploy` creates
+  // a SECOND, separate Worker: the build goes green, and your live site
+  // silently stops updating. That failure is quiet, which is what makes it
+  // nasty, so copy the name character for character (it is lowercase, with
+  // hyphens rather than spaces).
+  "name": "sgpowerdeals",
+
+  "compatibility_date": "2026-08-01",
+
+  // A static-assets-only Worker: no script, no build step. The repo root is
+  // the site root, which is deliberate — the scheduled Claude tasks fetch
+  // index.html and pacificlight-referral-code/index.html from the repo root
+  // via raw.githubusercontent.com. Moving the site into a public/ subfolder
+  // would break both tasks' URLs.
+  "assets": {
+    "directory": "./",
+
+    // Serves /pacificlight-referral-code/ from
+    // pacificlight-referral-code/index.html, which is how the site's internal
+    // links and sitemap are written.
+    "html_handling": "auto-trailing-slash"
+  }
+}
