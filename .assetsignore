@@ -7,3 +7,4 @@ watch/
 rates-watch.json
 wrangler.jsonc
 .assetsignore
+README.md
