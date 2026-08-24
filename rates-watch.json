@@ -1,50 +1,107 @@
-{
-  "last_run": "2026-08-24T03:17:11+00:00",
-  "status": "CHANGED",
-  "expected_baseline": "2026-08-24",
-  "changes": [
-    {
-      "field": "rebate PowerFIX 24",
-      "was": "$120",
-      "now": "not found on promotions page",
-      "severity": "investigate",
-      "observed_amounts": [
-        20,
-        100,
-        200
-      ]
-    }
-  ],
-  "baselined_this_run": {
-    "powerfix_24": "20260803(273.4)",
-    "powerfix_12": "20260803(284.4)"
-  },
-  "tracked_but_never_seen": [
-    "powerfix_25",
-    "powerdot_6"
-  ],
-  "observed": {
-    "factsheets": {
-      "powerfix_24": "20260803(273.4)",
-      "powerfix_36": "20260803(269.7)",
-      "powerfix_12": "20260803(284.4)"
-    },
-    "campaign_code_present": true,
-    "rebate_amounts_on_promotions_page": [
-      20,
-      100,
-      200
-    ],
-    "cents_rates_seen": [],
-    "decimal_rates_seen": [
-      0.294,
-      0.298,
-      0.31,
-      0.327
-    ]
-  },
-  "sources": {
-    "plans": "https://www.savewithtuas.com/our-electricity-plans/",
-    "promotions": "https://www.savewithtuas.com/promotions/"
-  }
-}
+name: Tuas rates watch
+
+# Daily tripwire on Tuas Power's own plans and campaign pages.
+# Writes rates-watch.json at the repo root — that file is what the Claude
+# scheduled task reads, because it can reach raw.githubusercontent.com but not
+# api.github.com.
+#
+# workflow_dispatch is here so you can run it by hand from the Actions tab,
+# which you should do once now to confirm the parser sees what it should.
+
+on:
+  schedule:
+    # 22:30 UTC = 06:30 Singapore. Before you'd normally look at anything.
+    - cron: "30 22 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: rates-watch
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check Tuas rates and campaign
+        id: check
+        run: python3 watch/check.py
+        continue-on-error: true
+
+      - name: Read status
+        id: status
+        run: |
+          if [ ! -f rates-watch.json ]; then
+            echo "check.py did not produce rates-watch.json — it crashed before" >&2
+            echo "writing output. Most likely watch/check.py is not valid Python" >&2
+            echo "(wrong content pasted in?) or a dependency is missing." >&2
+            echo "### Tuas rates watch — CHECK SCRIPT FAILED" >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          STATUS=$(python3 -c "import json;print(json.load(open('rates-watch.json'))['status'])")
+          echo "status=$STATUS" >> "$GITHUB_OUTPUT"
+          {
+            echo "### Tuas rates watch — $STATUS"
+            echo ""
+            echo '```json'
+            cat rates-watch.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit result
+        run: |
+          git config user.name  "rates-watch"
+          git config user.email "actions@users.noreply.github.com"
+          # expected.json MUST be staged too: check.py writes self-baselined
+          # factsheet versions into it, and if that never persists those plans
+          # re-baseline every run — which means a real reprice on them gets
+          # silently absorbed instead of flagged. A tripwire that quietly
+          # adopts the thing it is supposed to catch is worse than none.
+          git add rates-watch.json watch/WATCHLOG.md watch/expected.json
+          git diff --quiet --cached && echo "nothing to commit" && exit 0
+          git commit -m "rates-watch: ${{ steps.status.outputs.status }} $(date -u +%Y-%m-%d)"
+          # Another run may have pushed in between; rebase rather than fail.
+          git pull --rebase --autostash origin ${{ github.ref_name }} || true
+          git push
+
+      - name: Open an issue if something moved
+        if: steps.status.outputs.status != 'UNCHANGED'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BODY=$(mktemp)
+          {
+            echo "The daily tripwire found a change on Tuas Power's own pages."
+            echo ""
+            echo "Status: **${{ steps.status.outputs.status }}**"
+            echo ""
+            echo '```json'
+            cat rates-watch.json
+            echo '```'
+            echo ""
+            echo "Verify against the source before changing the site —"
+            echo "\`/promotions/online/\` has been serving stale rates all year,"
+            echo "so trust the factsheet PDFs and \`/promotions/onsgday26/\`."
+            echo ""
+            echo "The Claude daily task reads \`rates-watch.json\` and will"
+            echo "propose corrected files. Once the site is updated, update"
+            echo "\`watch/expected.json\` too or this will keep firing."
+          } > "$BODY"
+          gh issue create \
+            --title "Tuas rates watch: ${{ steps.status.outputs.status }} ($(date -u +%Y-%m-%d))" \
+            --body-file "$BODY" \
+            --label "rates-watch" || \
+          gh issue create \
+            --title "Tuas rates watch: ${{ steps.status.outputs.status }} ($(date -u +%Y-%m-%d))" \
+            --body-file "$BODY"
+
+      - name: Fail the run if the check itself broke
+        if: steps.check.outcome == 'failure' && steps.status.outputs.status == 'FETCH_FAILED'
+        run: |
+          echo "Tuas pages could not be read — nothing was verified." >&2
+          exit 1
