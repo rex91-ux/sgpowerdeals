@@ -1,24 +1,21 @@
 {
-  "_comment": "Baseline of Tuas Power figures as verified 24 Aug 2026 against Tuas's own factsheets and campaign pages. The tripwire compares live values against this file. When a change is confirmed and the site is updated, update this file too — otherwise the tripwire keeps firing on the same change.",
+  "_comment": "Baseline of Tuas Power figures as verified 24 Aug 2026 against Tuas's own factsheets and campaign pages. The tripwire compares live values against this file. When a change is confirmed and the site is updated, update this file too \u2014 otherwise the tripwire keeps firing on the same change.",
   "verified_on": "2026-08-24",
-
   "factsheet_versions": {
     "_comment": "Tuas encodes date and ex-GST rate in the PDF filename, e.g. powerfix_36_20260803(269.7).pdf = 3 Aug 2026, 26.97c ex-GST. A filename change is the single most reliable repricing signal.",
     "_bootstrap": "A value of \"unknown\" means: track this plan, but adopt whatever the first run observes and write it back here. Only powerfix_36 was confirmed by hand on 24 Aug 2026 (26.97c ex-GST / 29.40c inc GST, factsheet dated 3 Aug 2026). The rest self-baseline on the first run so the tripwire does not fire forever on plans whose exact filename was never verified.",
     "powerfix_36": "20260803(269.7)",
-    "powerfix_24": "unknown",
-    "powerfix_12": "unknown",
+    "powerfix_24": "20260803(273.4)",
+    "powerfix_12": "20260803(284.4)",
     "powerfix_25": "unknown",
     "powerdot_6": "unknown"
   },
-
   "rates_inc_gst_cents": {
-    "PowerFIX 36": 29.40,
-    "PowerFIX 24": 29.80,
-    "PowerFIX 12": 31.00,
-    "PowerFIX 25 G+": 32.70
+    "PowerFIX 36": 29.4,
+    "PowerFIX 24": 29.8,
+    "PowerFIX 12": 31.0,
+    "PowerFIX 25 G+": 32.7
   },
-
   "campaign": {
     "code": "ONSGDAY26",
     "ends": "2026-08-31",
@@ -27,13 +24,11 @@
     "signup_cap": 500,
     "voucher_option": true
   },
-
   "pacificlight_reference_inc_gst_cents": {
-    "_comment": "Not scraped — PacificLight factsheets are JavaScript-rendered. Held here so the editorial-inversion check has something to compare against. Verified by the Monday run, not by this tripwire.",
+    "_comment": "Not scraped \u2014 PacificLight factsheets are JavaScript-rendered. Held here so the editorial-inversion check has something to compare against. Verified by the Monday run, not by this tripwire.",
     "Savvy Saver 36": 27.18,
-    "Savvy Saver 24": 27.50
+    "Savvy Saver 24": 27.5
   },
-
   "editorial_position": {
     "_comment": "If Tuas ever becomes CHEAPER than PacificLight on the equivalent term, the site's two pages start contradicting each other and both need rewriting. The tripwire flags this as INVERSION, which is more urgent than an ordinary repricing.",
     "pacificlight_is_cheaper_on_rate": true
