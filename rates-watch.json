@@ -1,0 +1,50 @@
+{
+  "last_run": "2026-08-24T03:17:11+00:00",
+  "status": "CHANGED",
+  "expected_baseline": "2026-08-24",
+  "changes": [
+    {
+      "field": "rebate PowerFIX 24",
+      "was": "$120",
+      "now": "not found on promotions page",
+      "severity": "investigate",
+      "observed_amounts": [
+        20,
+        100,
+        200
+      ]
+    }
+  ],
+  "baselined_this_run": {
+    "powerfix_24": "20260803(273.4)",
+    "powerfix_12": "20260803(284.4)"
+  },
+  "tracked_but_never_seen": [
+    "powerfix_25",
+    "powerdot_6"
+  ],
+  "observed": {
+    "factsheets": {
+      "powerfix_24": "20260803(273.4)",
+      "powerfix_36": "20260803(269.7)",
+      "powerfix_12": "20260803(284.4)"
+    },
+    "campaign_code_present": true,
+    "rebate_amounts_on_promotions_page": [
+      20,
+      100,
+      200
+    ],
+    "cents_rates_seen": [],
+    "decimal_rates_seen": [
+      0.294,
+      0.298,
+      0.31,
+      0.327
+    ]
+  },
+  "sources": {
+    "plans": "https://www.savewithtuas.com/our-electricity-plans/",
+    "promotions": "https://www.savewithtuas.com/promotions/"
+  }
+}
