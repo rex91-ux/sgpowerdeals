@@ -1,0 +1,9 @@
+# Files in this repo that must NOT be published to sgpowerdeals.com.
+# Without this, the rates tripwire's internals get served as part of the site
+# and can be indexed by Google.
+
+.github/
+watch/
+rates-watch.json
+wrangler.jsonc
+.assetsignore
