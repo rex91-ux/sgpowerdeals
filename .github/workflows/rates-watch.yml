@@ -36,6 +36,13 @@ jobs:
       - name: Read status
         id: status
         run: |
+          if [ ! -f rates-watch.json ]; then
+            echo "check.py did not produce rates-watch.json — it crashed before" >&2
+            echo "writing output. Most likely watch/check.py is not valid Python" >&2
+            echo "(wrong content pasted in?) or a dependency is missing." >&2
+            echo "### Tuas rates watch — CHECK SCRIPT FAILED" >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
           STATUS=$(python3 -c "import json;print(json.load(open('rates-watch.json'))['status'])")
           echo "status=$STATUS" >> "$GITHUB_OUTPUT"
           {
@@ -50,7 +57,12 @@ jobs:
         run: |
           git config user.name  "rates-watch"
           git config user.email "actions@users.noreply.github.com"
-          git add rates-watch.json watch/WATCHLOG.md
+          # expected.json MUST be staged too: check.py writes self-baselined
+          # factsheet versions into it, and if that never persists those plans
+          # re-baseline every run — which means a real reprice on them gets
+          # silently absorbed instead of flagged. A tripwire that quietly
+          # adopts the thing it is supposed to catch is worse than none.
+          git add rates-watch.json watch/WATCHLOG.md watch/expected.json
           git diff --quiet --cached && echo "nothing to commit" && exit 0
           git commit -m "rates-watch: ${{ steps.status.outputs.status }} $(date -u +%Y-%m-%d)"
           # Another run may have pushed in between; rebase rather than fail.
