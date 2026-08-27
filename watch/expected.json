@@ -30,6 +30,21 @@
     "Savvy Saver 36": 29.4,
     "Savvy Saver 24": 29.8
   },
+  "pacificlight_factsheet_slugs": {
+    "_comment": "PacificLight factsheet slugs as recorded by the nightly Action's pacificlight_discovery block on 2026-08-25T22:56Z, matching the hand-verified position of 24 Aug 2026. Each slug encodes plan AND factsheet date. A NEWER date on any tracked slug, or an UNTRACKED slug appearing, means PacificLight has repriced: read https://pacificlight.com.sg/support/factsheet-detail/<slug> for the rate before and after GST. savvy_saver_24 and savvy_saver_36 carry the site's rate claims and matter most. Baselined from the discovery block, NOT re-read by hand on 26 Aug 2026 - scheduled cloud runs cannot reach pacificlight.com.sg.",
+    "_source": "https://www.pacificlight.com.sg/support/factsheet",
+    "_baselined_on": "2026-08-26",
+    "savvy_saver_36": "9-savvy-saver-36-20-aug-2026",
+    "savvy_saver_24": "06-savvy-saver-24-20-aug-2026",
+    "savvy_saver_12": "05-savvy-saver-12-7-aug-2026",
+    "sunny_side_up_12": "04-sunny-side-up-12-7-aug-2026",
+    "save_while_sleeping_24": "07-save-while-sleeping-24-20-aug-2026",
+    "stack_it_up_24": "08-Stack-It-Up-24-20-aug-2026",
+    "classic_60": "10-classic-60-20-aug-2026",
+    "easy_peasy": "02-easy-peasy-no-contract-6-jul-2026",
+    "easy_save": "1-easy-save-no-contract-1-july-2026",
+    "nine_to_nine": "03-9-to-9-no-contract-6-jul-2026"
+  },
   "editorial_position": {
     "_comment": "As at 24 Aug 2026 NO retailer is cheapest on rate: all six sit at 29.80c on 24 months, and PacificLight, Tuas and Senoko are all 29.40c on 36. The site no longer argues PacificLight is cheapest — it argues the rebates and perks decide. An INVERSION now means Tuas becoming strictly cheaper than PacificLight, not merely equal to it.",
     "pacificlight_is_cheaper_on_rate": false,
