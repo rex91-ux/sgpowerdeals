@@ -14,3 +14,4 @@ Appended by `.github/workflows/rates-watch.yml`. Every run writes a line, includ
 | 2026-08-29T03:48:52+00:00 | UNCHANGED | no change |
 | 2026-08-30T00:34:58+00:00 | UNCHANGED | no change |
 | 2026-08-31T00:46:43+00:00 | UNCHANGED | no change |
+| 2026-09-01T01:21:47+00:00 | UNCHANGED | no change |
