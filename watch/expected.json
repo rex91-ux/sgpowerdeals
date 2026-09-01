@@ -1,6 +1,6 @@
 {
   "_comment": "Baseline of Tuas Power figures as verified 24 Aug 2026 against Tuas's own factsheets and campaign pages. The tripwire compares live values against this file. When a change is confirmed and the site is updated, update this file too — otherwise the tripwire keeps firing on the same change.",
-  "verified_on": "2026-08-24",
+  "verified_on": "2026-09-01",
   "factsheet_versions": {
     "_comment": "Tuas encodes date and ex-GST rate in the PDF filename, e.g. powerfix_36_20260803(269.7).pdf = 3 Aug 2026, 26.97c ex-GST. A filename change is the single most reliable repricing signal.",
     "_bootstrap": "A value of \"unknown\" means: track this plan, but adopt whatever the first run observes and write it back here. Only powerfix_36 was confirmed by hand on 24 Aug 2026 (26.97c ex-GST / 29.40c inc GST, factsheet dated 3 Aug 2026). The rest self-baseline on the first run so the tripwire does not fire forever on plans whose exact filename was never verified.",
@@ -18,12 +18,13 @@
     "_comment": "Tuas Power plans, GST-inclusive, from their 3 Aug 2026 factsheets."
   },
   "campaign": {
-    "code": "ONSGDAY26",
-    "ends": "2026-08-31",
-    "rebate_powerfix_24": 120,
-    "rebate_powerfix_36": 200,
+    "_comment": "ONSGDAY26 (National Day, $120/$200, grocery e-voucher option) ENDED 31 Aug 2026 and was replaced on 1 Sep 2026 by ONLINE: $100 on PowerFIX 24, $160 on PowerFIX 36, BILL CREDIT ONLY - no grocery e-voucher - first 500 sign-ups, to 11 Oct 2026. Verified against savewithtuas.com/promotions/ and /promotions/online/, which agree. NOTE: the old warning to ignore /promotions/online/ as a stale July campaign no longer holds - as at 1 Sep 2026 that sub-page matches the promotions index.",
+    "code": "ONLINE",
+    "ends": "2026-10-11",
+    "rebate_powerfix_24": 100,
+    "rebate_powerfix_36": 160,
     "signup_cap": 500,
-    "voucher_option": true
+    "voucher_option": false
   },
   "pacificlight_reference_inc_gst_cents": {
     "_comment": "PacificLight repriced on 20 Aug 2026 — Savvy Saver 24: 27.50 -> 29.80, Savvy Saver 36: 27.18 -> 29.40 — read from their own factsheets on 24 Aug 2026. Their factsheet LISTING page IS readable and the slugs encode plan+date, so a real PacificLight tripwire is feasible; see pacificlight_discovery in rates-watch.json. Until that is built, these two numbers are maintained by hand.",
