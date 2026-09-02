@@ -1,57 +1,50 @@
 {
-  "last_run": "2026-09-01T01:21:47+00:00",
-  "status": "UNCHANGED",
-  "expected_baseline": "2026-08-24",
-  "changes": [],
+  "last_run": "2026-09-02T00:25:51+00:00",
+  "status": "CHANGED",
+  "expected_baseline": "2026-09-01",
+  "changes": [
+    {
+      "field": "factsheet powerfix_36",
+      "was": "20260803(269.7)",
+      "now": "NOT FOUND on plans page",
+      "severity": "investigate",
+      "note": "Either the plan was withdrawn or their markup changed. Check by hand before trusting this."
+    },
+    {
+      "field": "factsheet powerfix_24",
+      "was": "20260803(273.4)",
+      "now": "NOT FOUND on plans page",
+      "severity": "investigate",
+      "note": "Either the plan was withdrawn or their markup changed. Check by hand before trusting this."
+    },
+    {
+      "field": "factsheet powerfix_12",
+      "was": "20260803(284.4)",
+      "now": "NOT FOUND on plans page",
+      "severity": "investigate",
+      "note": "Either the plan was withdrawn or their markup changed. Check by hand before trusting this."
+    },
+    {
+      "field": "campaign ONLINE",
+      "was": "live",
+      "now": "no longer on the promotions page",
+      "severity": "campaign_ended",
+      "note": "The $100/$160 rebates and the 'up to S$220' claims on the Tuas page are now stale. Needs a prose rewrite, not a find-and-replace."
+    }
+  ],
   "baselined_this_run": {},
   "tracked_but_never_seen": [
     "powerfix_25",
     "powerdot_6"
   ],
   "observed": {
-    "factsheets": {
-      "powerfix_24": "20260803(273.4)",
-      "powerfix_36": "20260803(269.7)",
-      "powerfix_12": "20260803(284.4)"
-    },
-    "campaign_code_present": true,
+    "factsheets": {},
+    "campaign_code_present": false,
     "campaign_page_reachable": true,
-    "all_pdf_links": [
-      "//www.savewithtuas.com/assets/pdf/tps_relocation-faqs.pdf",
-      "/assets/pdf/2026/fs/ongreen_tnc_20260821.pdf",
-      "/assets/pdf/2026/fs/powerdot_6_20260803(10_).pdf",
-      "/assets/pdf/2026/fs/powerfix_12_20260803(284.4).pdf",
-      "/assets/pdf/2026/fs/powerfix_24_20260803(273.4).pdf",
-      "/assets/pdf/2026/fs/powerfix_36_20260803(269.7).pdf",
-      "/assets/pdf/2026/insurance/tncs_complimentary-insurance2026_jan-dec26.pdf",
-      "/assets/pdf/2026/non-standard-tnc_v190626.pdf",
-      "/assets/pdf/2026/onsgday26_tnc_20260803.pdf",
-      "/assets/pdf/2026/prpl26-tncs_260827.pdf",
-      "/assets/pdf/2026/standard_tnc_v190626.pdf",
-      "/assets/pdf/2026/tncs_complimentary-insurance2026_jan-dec26.pdf",
-      "/assets/referral-tnc_20260102-1767335359.pdf",
-      "100_bill_rebate.pdf",
-      "100_grocery_e-voucher.pdf",
-      "120_bill_rebate.pdf",
-      "120_grocery_e-voucher.pdf",
-      "200_bill_rebate.pdf",
-      "200_grocery_e-voucher.pdf"
-    ],
-    "rebate_amounts_on_promotions_page": [
-      20,
-      100,
-      120,
-      160,
-      200,
-      380
-    ],
+    "all_pdf_links": [],
+    "rebate_amounts_on_promotions_page": [],
     "cents_rates_seen": [],
-    "decimal_rates_seen": [
-      0.294,
-      0.298,
-      0.31,
-      0.327
-    ]
+    "decimal_rates_seen": []
   },
   "sources": {
     "plans": "https://www.savewithtuas.com/our-electricity-plans/",
@@ -88,43 +81,7 @@
       "looks_like_js_shell": false
     },
     "pl_factsheets": {
-      "bytes": 35289,
-      "factsheet_slugs": [
-        "02-easy-peasy-no-contract-6-jul-2026",
-        "03-9-to-9-no-contract-6-jul-2026",
-        "04-sunny-side-up-12-7-aug-2026",
-        "05-savvy-saver-12-7-aug-2026",
-        "06-savvy-saver-24-20-aug-2026",
-        "07-save-while-sleeping-24-20-aug-2026",
-        "08-Stack-It-Up-24-20-aug-2026",
-        "1-easy-save-no-contract-1-july-2026",
-        "10-classic-60-20-aug-2026",
-        "9-savvy-saver-36-20-aug-2026"
-      ],
-      "api_paths": [],
-      "json_urls": [],
-      "ssr_markers": [],
-      "script_srcs": [
-        "/js/aos.js",
-        "/js/custom.js?v10",
-        "/js/index.js",
-        "/js/jquery.scrollTo-min.js",
-        "/js/lazysizes.min.js",
-        "/js/modernizr-custom-3-12.js",
-        "/js/moment.js?v=2.30.1",
-        "/js/pikaday.js",
-        "/js/support.js",
-        "/vendor/bootstrap/js/bootstrap.bundle.min.js",
-        "/vendor/jquery/jquery.min.js",
-        "http://ajax.googleapis.com/ajax/libs/prototype/1.7.1/prototype.js",
-        "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js",
-        "https://www.googletagmanager.com/gtag/js?id=AW-807984777",
-        "https://www.googletagmanager.com/gtag/js?id=UA-63432161-1"
-      ],
-      "decimal_rates_seen": [],
-      "cents_rates_seen": [],
-      "mentions_savvy_saver": 3,
-      "looks_like_js_shell": false
+      "error": "HTTPError: HTTP Error 522: <none>"
     },
     "pl_residential": {
       "bytes": 0,
