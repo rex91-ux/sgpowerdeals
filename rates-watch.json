@@ -1,5 +1,5 @@
 {
-  "last_run": "2026-09-06T00:08:45+00:00",
+  "last_run": "2026-09-07T00:13:39+00:00",
   "status": "CHANGED",
   "expected_baseline": "2026-09-01",
   "changes": [
@@ -16,20 +16,6 @@
       "now": "NOT FOUND on plans page",
       "severity": "investigate",
       "note": "Either the plan was withdrawn or their markup changed. Check by hand before trusting this."
-    },
-    {
-      "field": "factsheet powerfix_12",
-      "was": "20260803(284.4)",
-      "now": "NOT FOUND on plans page",
-      "severity": "investigate",
-      "note": "Either the plan was withdrawn or their markup changed. Check by hand before trusting this."
-    },
-    {
-      "field": "campaign ONLINE",
-      "was": "live",
-      "now": "no longer on the promotions page",
-      "severity": "campaign_ended",
-      "note": "The $100/$160 rebates and the 'up to S$220' claims on the Tuas page are now stale. Needs a prose rewrite, not a find-and-replace."
     }
   ],
   "baselined_this_run": {},
@@ -38,13 +24,39 @@
     "powerdot_6"
   ],
   "observed": {
-    "factsheets": {},
-    "campaign_code_present": false,
+    "factsheets": {
+      "powerfix_12": "20260803(284.4)"
+    },
+    "campaign_code_present": true,
     "campaign_page_reachable": true,
-    "all_pdf_links": [],
-    "rebate_amounts_on_promotions_page": [],
+    "all_pdf_links": [
+      "//www.savewithtuas.com/assets/pdf/tps_relocation-faqs.pdf",
+      "/assets/pdf/2026/fs/powerdot_6_20260803(10_).pdf",
+      "/assets/pdf/2026/fs/powerfix_12_20260803(284.4).pdf",
+      "/assets/pdf/2026/insurance/tncs_complimentary-insurance2026_jan-dec26.pdf",
+      "/assets/pdf/2026/non-standard-tnc_v190626.pdf",
+      "/assets/pdf/2026/ongreen_tnc_20260901.pdf",
+      "/assets/pdf/2026/online_tnc_20260901.pdf",
+      "/assets/pdf/2026/prpl26-tncs_260827.pdf",
+      "/assets/pdf/2026/standard_tnc_v190626.pdf",
+      "/assets/pdf/2026/tncs_complimentary-insurance2026_jan-dec26.pdf",
+      "/assets/referral-tnc_20260102-1767335359.pdf",
+      "100_bill_rebate.pdf",
+      "160_bill_rebate.pdf"
+    ],
+    "rebate_amounts_on_promotions_page": [
+      20,
+      100,
+      160,
+      380
+    ],
     "cents_rates_seen": [],
-    "decimal_rates_seen": []
+    "decimal_rates_seen": [
+      0.294,
+      0.298,
+      0.31,
+      0.327
+    ]
   },
   "sources": {
     "plans": "https://www.savewithtuas.com/our-electricity-plans/",
