@@ -1,13 +1,13 @@
 {
   "_comment": "Baseline of Tuas Power figures as verified 24 Aug 2026 against Tuas's own factsheets and campaign pages. The tripwire compares live values against this file. When a change is confirmed and the site is updated, update this file too — otherwise the tripwire keeps firing on the same change.",
-  "verified_on": "2026-09-01",
+  "verified_on": "2026-09-07",
   "factsheet_versions": {
-    "_comment": "Tuas encodes date and ex-GST rate in the PDF filename, e.g. powerfix_36_20260803(269.7).pdf = 3 Aug 2026, 26.97c ex-GST. A filename change is the single most reliable repricing signal.",
-    "_bootstrap": "A value of \"unknown\" means: track this plan, but adopt whatever the first run observes and write it back here. Only powerfix_36 was confirmed by hand on 24 Aug 2026 (26.97c ex-GST / 29.40c inc GST, factsheet dated 3 Aug 2026). The rest self-baseline on the first run so the tripwire does not fire forever on plans whose exact filename was never verified.",
-    "powerfix_36": "20260803(269.7)",
-    "powerfix_24": "20260803(273.4)",
+    "_comment": "Tuas encodes date and ex-GST rate in the PDF filename, e.g. powerfix_36_20260828(269.7)-$160_bill_rebate.pdf = 28 Aug 2026, 26.97c ex-GST. Since 28 Aug 2026 the filenames also carry a '-$N_bill_rebate' suffix; check.py's FACTSHEET_RE was widened on 7 Sep 2026 to tolerate it. A filename change is the single most reliable repricing signal.",
+    "_bootstrap": "A value of \"unknown\" means: track this plan, but adopt whatever the first run observes and write it back here. PowerFIX 36/24/12 and 25 G+ were all confirmed by hand against Tuas's own plans page on 7 Sep 2026. powerdot_6 stays unknown because its filename encodes a percentage (\"(10_)\") rather than a decimal rate and the rate group does not match it.",
+    "powerfix_36": "20260828(269.7)",
+    "powerfix_24": "20260828(273.4)",
     "powerfix_12": "20260803(284.4)",
-    "powerfix_25": "unknown",
+    "powerfix_25": "20260615(300)",
     "powerdot_6": "unknown"
   },
   "rates_inc_gst_cents": {
@@ -15,10 +15,10 @@
     "PowerFIX 24": 29.8,
     "PowerFIX 12": 31.0,
     "PowerFIX 25 G+": 32.7,
-    "_comment": "Tuas Power plans, GST-inclusive, from their 3 Aug 2026 factsheets."
+    "_comment": "Tuas Power plans, GST-inclusive. Re-verified 7 Sep 2026 against savewithtuas.com/our-electricity-plans/: rates UNCHANGED from 1 Sep, but the PowerFIX 36 and 24 factsheets were reissued dated 28 Aug 2026 at the same ex-GST rates (269.7 / 273.4)."
   },
   "campaign": {
-    "_comment": "ONSGDAY26 (National Day, $120/$200, grocery e-voucher option) ENDED 31 Aug 2026 and was replaced on 1 Sep 2026 by ONLINE: $100 on PowerFIX 24, $160 on PowerFIX 36, BILL CREDIT ONLY - no grocery e-voucher - first 500 sign-ups, to 11 Oct 2026. Verified against savewithtuas.com/promotions/ and /promotions/online/, which agree. NOTE: the old warning to ignore /promotions/online/ as a stale July campaign no longer holds - as at 1 Sep 2026 that sub-page matches the promotions index.",
+    "_comment": "ONLINE: $100 on PowerFIX 24, $160 on PowerFIX 36, BILL CREDIT ONLY - no grocery e-voucher - first 500 successful sign-ups, to 11 Oct 2026. RE-VERIFIED 7 Sep 2026 against three independent sources that agree: /promotions/, /promotions/online/, and the factsheet filenames which now embed the rebate ($100 / $160). Replaced ONSGDAY26 (National Day, $120/$200, e-voucher option) which ended 31 Aug 2026. The old warning to ignore /promotions/online/ as a stale July campaign no longer holds. CAVEAT found 7 Sep 2026: /promotions/ states the referral 'bill rebate will be revised when combined with another promotion', so the $160+$20=$180 stack is not guaranteed. Other live campaigns: ONGREEN $100 on PowerFIX 25 G+ (to 11 Oct), PRPL26 StarHub Premier League worth $380 (to 30 Sep), PRUOB UOB cashback (to 11 Oct).",
     "code": "ONLINE",
     "ends": "2026-10-11",
     "rebate_powerfix_24": 100,
@@ -32,9 +32,9 @@
     "Savvy Saver 24": 29.8
   },
   "pacificlight_factsheet_slugs": {
-    "_comment": "PacificLight factsheet slugs as recorded by the nightly Action's pacificlight_discovery block on 2026-08-25T22:56Z, matching the hand-verified position of 24 Aug 2026. Each slug encodes plan AND factsheet date. A NEWER date on any tracked slug, or an UNTRACKED slug appearing, means PacificLight has repriced: read https://pacificlight.com.sg/support/factsheet-detail/<slug> for the rate before and after GST. savvy_saver_24 and savvy_saver_36 carry the site's rate claims and matter most. Baselined from the discovery block, NOT re-read by hand on 26 Aug 2026 - scheduled cloud runs cannot reach pacificlight.com.sg.",
+    "_comment": "PacificLight factsheet slugs as recorded by the nightly Action's pacificlight_discovery block on 2026-08-25T22:56Z, matching the hand-verified position of 24 Aug 2026. Each slug encodes plan AND factsheet date. A NEWER date on any tracked slug, or an UNTRACKED slug appearing, means PacificLight has repriced: read https://pacificlight.com.sg/support/factsheet-detail/<slug> for the rate before and after GST. savvy_saver_24 and savvy_saver_36 carry the site's rate claims and matter most. RE-READ BY HAND 7 Sep 2026 from the factsheet listing: all ten slugs identical to this baseline, so PacificLight has NOT repriced since 20 Aug 2026.",
     "_source": "https://www.pacificlight.com.sg/support/factsheet",
-    "_baselined_on": "2026-08-26",
+    "_baselined_on": "2026-09-07",
     "savvy_saver_36": "9-savvy-saver-36-20-aug-2026",
     "savvy_saver_24": "06-savvy-saver-24-20-aug-2026",
     "savvy_saver_12": "05-savvy-saver-12-7-aug-2026",
@@ -47,7 +47,7 @@
     "nine_to_nine": "03-9-to-9-no-contract-6-jul-2026"
   },
   "editorial_position": {
-    "_comment": "As at 24 Aug 2026 NO retailer is cheapest on rate: all six sit at 29.80c on 24 months, and PacificLight, Tuas and Senoko are all 29.40c on 36. The site no longer argues PacificLight is cheapest — it argues the rebates and perks decide. An INVERSION now means Tuas becoming strictly cheaper than PacificLight, not merely equal to it.",
+    "_comment": "As at 7 Sep 2026 (re-checked; unchanged since 24 Aug 2026) NO retailer is cheapest on rate: all six sit at 29.80c on 24 months, and PacificLight, Tuas and Senoko are all 29.40c on 36. The site no longer argues PacificLight is cheapest — it argues the rebates and perks decide. An INVERSION now means Tuas becoming strictly cheaper than PacificLight, not merely equal to it.",
     "pacificlight_is_cheaper_on_rate": false,
     "rates_converged": true
   }
