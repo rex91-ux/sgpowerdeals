@@ -22,3 +22,4 @@ Appended by `.github/workflows/rates-watch.yml`. Every run writes a line, includ
 | 2026-09-06T00:08:45+00:00 | CHANGED | factsheet powerfix_36: 20260803(269.7) -> NOT FOUND on plans page; factsheet powerfix_24: 20260803(273.4) -> NOT FOUND on plans page; factsheet powerfix_12: 20260803(284.4) -> NOT FOUND on plans page; campaign ONLINE: live -> no longer on the promotions page |
 | 2026-09-07T00:13:39+00:00 | CHANGED | factsheet powerfix_36: 20260803(269.7) -> NOT FOUND on plans page; factsheet powerfix_24: 20260803(273.4) -> NOT FOUND on plans page |
 | 2026-09-08T00:37:07+00:00 | CHANGED | factsheet powerfix_36: 20260803(269.7) -> NOT FOUND on plans page; factsheet powerfix_24: 20260803(273.4) -> NOT FOUND on plans page |
+| 2026-09-11T00:24:05+00:00 | UNCHANGED | no change |
