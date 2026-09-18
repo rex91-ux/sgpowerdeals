@@ -29,3 +29,4 @@ Appended by `.github/workflows/rates-watch.yml`. Every run writes a line, includ
 | 2026-09-15T00:49:48+00:00 | CHANGED | factsheet powerfix_36: 20260828(269.7) -> NOT FOUND on plans page; factsheet powerfix_24: 20260828(273.4) -> NOT FOUND on plans page; factsheet powerfix_12: 20260803(284.4) -> NOT FOUND on plans page; factsheet powerfix_25: 20260615(300) -> NOT FOUND on plans page; campaign ONLINE: live -> no longer on the promotions page |
 | 2026-09-16T00:41:57+00:00 | UNCHANGED | no change |
 | 2026-09-17T00:48:29+00:00 | UNCHANGED | no change |
+| 2026-09-18T00:40:55+00:00 | UNCHANGED | no change |
