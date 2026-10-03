@@ -1,5 +1,5 @@
 {
-  "last_run": "2026-10-02T01:46:26+00:00",
+  "last_run": "2026-10-03T01:19:46+00:00",
   "status": "UNCHANGED",
   "expected_baseline": "2026-09-07",
   "changes": [],
@@ -54,7 +54,7 @@
   },
   "pacificlight_discovery": {
     "pl_home": {
-      "bytes": 47703,
+      "bytes": 47397,
       "factsheet_slugs": [],
       "api_paths": [],
       "json_urls": [],
