@@ -1,5 +1,5 @@
 {
-  "last_run": "2026-10-06T02:26:03+00:00",
+  "last_run": "2026-10-07T01:44:32+00:00",
   "status": "UNCHANGED",
   "expected_baseline": "2026-09-07",
   "changes": [],
@@ -27,6 +27,7 @@
       "/assets/pdf/2026/non-standard-tnc_v190626.pdf",
       "/assets/pdf/2026/ongreen_tnc_20260901.pdf",
       "/assets/pdf/2026/online_tnc_20260901.pdf",
+      "/assets/pdf/2026/onrace26_tnc_20261007.pdf",
       "/assets/pdf/2026/prpl26-tncs_261001.pdf",
       "/assets/pdf/2026/standard_tnc_v190626.pdf",
       "/assets/pdf/2026/tncs_complimentary-insurance2026_jan-dec26.pdf",
@@ -36,6 +37,7 @@
       20,
       100,
       160,
+      200,
       380
     ],
     "cents_rates_seen": [],
