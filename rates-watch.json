@@ -1,34 +1,60 @@
 {
-  "last_run": "2026-10-11T01:10:10+00:00",
-  "status": "UNCHANGED",
+  "last_run": "2026-10-12T01:36:16+00:00",
+  "status": "CHANGED",
   "expected_baseline": "2026-09-07",
-  "changes": [],
+  "changes": [
+    {
+      "field": "factsheet powerfix_36",
+      "was": "20260828(269.7)",
+      "now": "20261008(281)",
+      "was_rate_inc_gst": 29.4,
+      "now_rate_inc_gst": 30.63,
+      "severity": "repriced"
+    },
+    {
+      "field": "factsheet powerfix_24",
+      "was": "20260828(273.4)",
+      "now": "20261006(283.5)",
+      "was_rate_inc_gst": 29.8,
+      "now_rate_inc_gst": 30.9,
+      "severity": "repriced"
+    },
+    {
+      "field": "factsheet powerfix_12",
+      "was": "20260803(284.4)",
+      "now": "20261006(285.8)",
+      "was_rate_inc_gst": 31.0,
+      "now_rate_inc_gst": 31.15,
+      "severity": "repriced"
+    }
+  ],
   "baselined_this_run": {},
   "tracked_but_never_seen": [
     "powerdot_6"
   ],
   "observed": {
     "factsheets": {
-      "powerfix_24": "20260828(273.4)",
-      "powerfix_36": "20260828(269.7)",
+      "powerfix_24": "20261006(283.5)",
+      "powerfix_36": "20261008(281)",
       "powerfix_25": "20260615(300)",
-      "powerfix_12": "20260803(284.4)"
+      "powerfix_12": "20261006(285.8)"
     },
     "campaign_code_present": true,
     "campaign_page_reachable": true,
     "all_pdf_links": [
       "//www.savewithtuas.com/assets/pdf/tps_relocation-faqs.pdf",
-      "/assets/pdf/2026/fs/powerdot_6_20260803(10_).pdf",
-      "/assets/pdf/2026/fs/powerfix_12_20260803(284.4).pdf",
+      "/assets/online_tnc_20261012.pdf",
       "/assets/pdf/2026/fs/powerfix_24_20260828(273.4)-$100_bill_rebate.pdf",
+      "/assets/pdf/2026/fs/powerfix_24_20261006(283.5)-$100_bill_rebate.pdf",
       "/assets/pdf/2026/fs/powerfix_25_20260615(300)-$100_bill_rebate.pdf",
       "/assets/pdf/2026/fs/powerfix_36_20260828(269.7)-$160_bill_rebate.pdf",
       "/assets/pdf/2026/insurance/tncs_complimentary-insurance2026_jan-dec26.pdf",
       "/assets/pdf/2026/non-standard-tnc_v190626.pdf",
-      "/assets/pdf/2026/ongreen_tnc_20260901.pdf",
-      "/assets/pdf/2026/online_tnc_20260901.pdf",
+      "/assets/pdf/2026/ongreen_tnc_20261012.pdf",
       "/assets/pdf/2026/onrace26_tnc_20261007.pdf",
-      "/assets/pdf/2026/prpl26-tncs_261001.pdf",
+      "/assets/pdf/2026/powerfix_12_20261006(285.8).pdf",
+      "/assets/pdf/2026/powerfix_36_20261008(281)-$160_bill_rebate.pdf",
+      "/assets/pdf/2026/prpl26_tncs_261012.pdf",
       "/assets/pdf/2026/standard_tnc_v190626.pdf",
       "/assets/pdf/2026/tncs_complimentary-insurance2026_jan-dec26.pdf",
       "/assets/referral-tnc_20260102-1767335359.pdf"
@@ -42,9 +68,9 @@
     ],
     "cents_rates_seen": [],
     "decimal_rates_seen": [
-      0.294,
-      0.298,
-      0.31,
+      0.3063,
+      0.309,
+      0.3115,
       0.327
     ]
   },
@@ -55,7 +81,7 @@
   },
   "pacificlight_discovery": {
     "pl_home": {
-      "bytes": 47379,
+      "bytes": 47393,
       "factsheet_slugs": [],
       "api_paths": [],
       "json_urls": [],
