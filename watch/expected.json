@@ -1,54 +1,62 @@
 {
-  "_comment": "Baseline of Tuas Power figures as verified 24 Aug 2026 against Tuas's own factsheets and campaign pages. The tripwire compares live values against this file. When a change is confirmed and the site is updated, update this file too — otherwise the tripwire keeps firing on the same change.",
-  "verified_on": "2026-09-07",
+  "_comment": "Baseline of Tuas Power figures as verified 13 Oct 2026 against Tuas's own factsheets and campaign pages. The tripwire compares live values against this file. When a change is confirmed and the site is updated, update this file too — otherwise the tripwire keeps firing on the same change.",
+  "verified_on": "2026-10-13",
   "factsheet_versions": {
-    "_comment": "Tuas encodes date and ex-GST rate in the PDF filename, e.g. powerfix_36_20260828(269.7)-$160_bill_rebate.pdf = 28 Aug 2026, 26.97c ex-GST. Since 28 Aug 2026 the filenames also carry a '-$N_bill_rebate' suffix; check.py's FACTSHEET_RE was widened on 7 Sep 2026 to tolerate it. A filename change is the single most reliable repricing signal.",
-    "_bootstrap": "A value of \"unknown\" means: track this plan, but adopt whatever the first run observes and write it back here. PowerFIX 36/24/12 and 25 G+ were all confirmed by hand against Tuas's own plans page on 7 Sep 2026. powerdot_6 stays unknown because its filename encodes a percentage (\"(10_)\") rather than a decimal rate and the rate group does not match it.",
-    "powerfix_36": "20260828(269.7)",
-    "powerfix_24": "20260828(273.4)",
-    "powerfix_12": "20260803(284.4)",
+    "_comment": "Tuas encodes date and ex-GST rate in the PDF filename, e.g. powerfix_36_20261008(281)-$160_bill_rebate.pdf = 8 Oct 2026, 28.10c ex-GST. A filename change is the single most reliable repricing signal.",
+    "_bootstrap": "A value of \"unknown\" means: track this plan, but adopt whatever the first run observes and write it back here. powerdot_6 stays unknown because its filename encodes a percentage (\"(10_)\") rather than a decimal rate and the rate group does not match it.",
+    "powerfix_36": "20261008(281)",
+    "powerfix_24": "20261006(283.5)",
+    "powerfix_12": "20261006(285.8)",
     "powerfix_25": "20260615(300)",
     "powerdot_6": "unknown"
   },
   "rates_inc_gst_cents": {
-    "PowerFIX 36": 29.4,
-    "PowerFIX 24": 29.8,
-    "PowerFIX 12": 31.0,
+    "PowerFIX 36": 30.63,
+    "PowerFIX 24": 30.9,
+    "PowerFIX 12": 31.15,
     "PowerFIX 25 G+": 32.7,
-    "_comment": "Tuas Power plans, GST-inclusive. Re-verified 7 Sep 2026 against savewithtuas.com/our-electricity-plans/: rates UNCHANGED from 1 Sep, but the PowerFIX 36 and 24 factsheets were reissued dated 28 Aug 2026 at the same ex-GST rates (269.7 / 273.4)."
+    "_comment": "Tuas Power plans, GST-inclusive. Tuas RAISED rates on 6-8 Oct 2026 (36mth 29.40 -> 30.63, 24mth 29.80 -> 30.90, 12mth 31.00 -> 31.15) in the same week that SP's regulated tariff FELL 10.4% and PacificLight, Senoko and Geneco all cut. Verified 13 Oct 2026 against savewithtuas.com/our-electricity-plans/, which ties exactly to the ex-GST figures in the factsheet filenames."
   },
   "campaign": {
-    "_comment": "ONLINE: $100 on PowerFIX 24, $160 on PowerFIX 36, BILL CREDIT ONLY - no grocery e-voucher - first 500 successful sign-ups, to 11 Oct 2026. RE-VERIFIED 7 Sep 2026 against three independent sources that agree: /promotions/, /promotions/online/, and the factsheet filenames which now embed the rebate ($100 / $160). Replaced ONSGDAY26 (National Day, $120/$200, e-voucher option) which ended 31 Aug 2026. The old warning to ignore /promotions/online/ as a stale July campaign no longer holds. CAVEAT found 7 Sep 2026: /promotions/ states the referral 'bill rebate will be revised when combined with another promotion', so the $160+$20=$180 stack is not guaranteed. Other live campaigns: ONGREEN $100 on PowerFIX 25 G+ (to 11 Oct), PRPL26 StarHub Premier League worth $380 (to 30 Sep), PRUOB UOB cashback (to 11 Oct).",
+    "_comment": "ONLINE: $100 on PowerFIX 24, $160 on PowerFIX 36, BILL CREDIT ONLY - no grocery e-voucher. Was due to end 11 Oct 2026; EXTENDED to 1 Nov 2026, confirmed on /promotions/ 13 Oct 2026. The 500-sign-up cap is no longer advertised on the campaign page. Other live campaigns as at 13 Oct: ONGREEN $100 on PowerFIX 25 G+, PRPL26 StarHub Premier+ worth $380, PRUOB UOB cashback up to 4.33%. A T&C PDF onrace26_tnc_20261007.pdf exists in the asset directory but no ONRACE26 campaign appears on /promotions/ yet - watch for it. CAVEAT still live: /promotions/ states the referral 'bill rebate will be revised when combined with another promotion', so the $160+$20=$180 stack is not guaranteed.",
     "code": "ONLINE",
-    "ends": "2026-10-11",
+    "ends": "2026-11-01",
     "rebate_powerfix_24": 100,
     "rebate_powerfix_36": 160,
-    "signup_cap": 500,
+    "signup_cap": null,
     "voucher_option": false
   },
   "pacificlight_reference_inc_gst_cents": {
-    "_comment": "PacificLight repriced on 20 Aug 2026 — Savvy Saver 24: 27.50 -> 29.80, Savvy Saver 36: 27.18 -> 29.40 — read from their own factsheets on 24 Aug 2026. Their factsheet LISTING page IS readable and the slugs encode plan+date, so a real PacificLight tripwire is feasible; see pacificlight_discovery in rates-watch.json. Until that is built, these two numbers are maintained by hand.",
-    "Savvy Saver 36": 29.4,
-    "Savvy Saver 24": 29.8
+    "_comment": "PacificLight CUT rates on 8 Oct 2026 — Savvy Saver 36: 29.40 -> 28.90 (26.513 ex-GST), Savvy Saver 24: 29.80 -> 29.00 (26.605 ex-GST) — read from their own factsheet-detail pages on 13 Oct 2026. PacificLight is now ~1.7c CHEAPER than Tuas, reversing the Aug-Sep position. Senoko LifePower36 matches at 28.90 and Senoko LifePower24 / Geneco Get It Fixed 24 match at 29.00, so PacificLight is level with the market leaders rather than uniquely cheapest.",
+    "Savvy Saver 36": 28.9,
+    "Savvy Saver 24": 29.0
   },
   "pacificlight_factsheet_slugs": {
-    "_comment": "PacificLight factsheet slugs as recorded by the nightly Action's pacificlight_discovery block on 2026-08-25T22:56Z, matching the hand-verified position of 24 Aug 2026. Each slug encodes plan AND factsheet date. A NEWER date on any tracked slug, or an UNTRACKED slug appearing, means PacificLight has repriced: read https://pacificlight.com.sg/support/factsheet-detail/<slug> for the rate before and after GST. savvy_saver_24 and savvy_saver_36 carry the site's rate claims and matter most. RE-READ BY HAND 7 Sep 2026 from the factsheet listing: all ten slugs identical to this baseline, so PacificLight has NOT repriced since 20 Aug 2026.",
+    "_comment": "PacificLight factsheet slugs re-baselined by hand on 13 Oct 2026 from the factsheet listing. Each slug encodes plan AND factsheet date. A NEWER date on any tracked slug, or an UNTRACKED slug appearing, means PacificLight has repriced. NOTE: check.py currently only RECORDS these in rates-watch.json's pacificlight_discovery block and does NOT raise CHANGED on them — the 8 Oct reprice was captured on 11 Oct but reported as UNCHANGED. Widening check.py to diff these against this baseline is the single highest-value fix to the tripwire.",
     "_source": "https://www.pacificlight.com.sg/support/factsheet",
-    "_baselined_on": "2026-09-07",
-    "savvy_saver_36": "9-savvy-saver-36-20-aug-2026",
-    "savvy_saver_24": "06-savvy-saver-24-20-aug-2026",
-    "savvy_saver_12": "05-savvy-saver-12-7-aug-2026",
-    "sunny_side_up_12": "04-sunny-side-up-12-7-aug-2026",
-    "save_while_sleeping_24": "07-save-while-sleeping-24-20-aug-2026",
-    "stack_it_up_24": "08-Stack-It-Up-24-20-aug-2026",
+    "_baselined_on": "2026-10-13",
+    "savvy_saver_36": "9-savvy-saver-36-8-oct-2026",
+    "savvy_saver_24": "06-savvy-saver-24-8-oct-2026",
+    "savvy_saver_12": "05-savvy-saver-12-8-oct-2026",
+    "sunny_side_up_12": "04-sunny-side-up-12-01-oct-2026",
+    "save_while_sleeping_24": "07-save-while-sleeping-24-8-oct-2026",
+    "stack_it_up_24": "08-Stack-It-Up-24-8-oct-2026",
     "classic_60": "10-classic-60-20-aug-2026",
-    "easy_peasy": "02-easy-peasy-no-contract-6-jul-2026",
+    "easy_peasy": "02-easy-peasy-no-contract-7-oct-2026",
     "easy_save": "1-easy-save-no-contract-1-july-2026",
-    "nine_to_nine": "03-9-to-9-no-contract-6-jul-2026"
+    "nine_to_nine": "03-9-to-9-no-contract-7-oct-2026"
+  },
+  "sp_regulated_tariff": {
+    "_comment": "SP Group regulated tariff for Q4 2026 (1 Oct - 31 Dec 2026): 28.59c ex-GST = 31.16c inc-GST, down 10.4% from 34.78c inc-GST in Q3. Both site pages now quote 31.16c. Confirm against spgroup.com.sg at each quarter boundary; next revision due 1 Jan 2027.",
+    "quarter": "2026-Q4",
+    "ex_gst_cents": 28.59,
+    "inc_gst_cents": 31.16
   },
   "editorial_position": {
-    "_comment": "As at 7 Sep 2026 (re-checked; unchanged since 24 Aug 2026) NO retailer is cheapest on rate: all six sit at 29.80c on 24 months, and PacificLight, Tuas and Senoko are all 29.40c on 36. The site no longer argues PacificLight is cheapest — it argues the rebates and perks decide. An INVERSION now means Tuas becoming strictly cheaper than PacificLight, not merely equal to it.",
-    "pacificlight_is_cheaper_on_rate": false,
-    "rates_converged": true
+    "_comment": "INVERTED on 13 Oct 2026. The Aug-Sep position (rates converged, nobody cheapest, rebates and perks decide) is dead. PacificLight is now ~1.73c cheaper than Tuas on 36 months and ~1.90c on 24 — worth roughly $242 over a three-year contract at 388.5 kWh/month, more than Tuas's $160 rebate returns. The site now says plainly that PacificLight is the cheaper choice and that Tuas's remaining advantage is the 12 months of free Singlife insurance. Neither page claims any retailer is 'cheapest in Singapore': PacificLight ties Senoko on both terms and Geneco on 24 months, and Keppel and Sembcorp publish no residential rate.",
+    "pacificlight_is_cheaper_on_rate": true,
+    "rates_converged": false,
+    "pacificlight_vs_tuas_gap_cents_36mth": 1.73,
+    "pacificlight_vs_tuas_gap_cents_24mth": 1.9
   }
 }
