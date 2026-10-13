@@ -54,3 +54,4 @@ Appended by `.github/workflows/rates-watch.yml`. Every run writes a line, includ
 | 2026-10-10T01:52:25+00:00 | UNCHANGED | no change |
 | 2026-10-11T01:10:10+00:00 | UNCHANGED | no change |
 | 2026-10-12T01:36:16+00:00 | CHANGED | factsheet powerfix_36: 20260828(269.7) -> 20261008(281); factsheet powerfix_24: 20260828(273.4) -> 20261006(283.5); factsheet powerfix_12: 20260803(284.4) -> 20261006(285.8) |
+| 2026-10-13T03:07:26+00:00 | CHANGED | factsheet powerfix_36: 20260828(269.7) -> 20261008(281); factsheet powerfix_24: 20260828(273.4) -> 20261006(283.5); factsheet powerfix_12: 20260803(284.4) -> 20261006(285.8) |

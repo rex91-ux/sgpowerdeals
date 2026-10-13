@@ -1,5 +1,5 @@
 {
-  "last_run": "2026-10-12T01:36:16+00:00",
+  "last_run": "2026-10-13T03:07:26+00:00",
   "status": "CHANGED",
   "expected_baseline": "2026-09-07",
   "changes": [
@@ -44,14 +44,11 @@
     "all_pdf_links": [
       "//www.savewithtuas.com/assets/pdf/tps_relocation-faqs.pdf",
       "/assets/online_tnc_20261012.pdf",
-      "/assets/pdf/2026/fs/powerfix_24_20260828(273.4)-$100_bill_rebate.pdf",
       "/assets/pdf/2026/fs/powerfix_24_20261006(283.5)-$100_bill_rebate.pdf",
       "/assets/pdf/2026/fs/powerfix_25_20260615(300)-$100_bill_rebate.pdf",
-      "/assets/pdf/2026/fs/powerfix_36_20260828(269.7)-$160_bill_rebate.pdf",
       "/assets/pdf/2026/insurance/tncs_complimentary-insurance2026_jan-dec26.pdf",
       "/assets/pdf/2026/non-standard-tnc_v190626.pdf",
       "/assets/pdf/2026/ongreen_tnc_20261012.pdf",
-      "/assets/pdf/2026/onrace26_tnc_20261007.pdf",
       "/assets/pdf/2026/powerfix_12_20261006(285.8).pdf",
       "/assets/pdf/2026/powerfix_36_20261008(281)-$160_bill_rebate.pdf",
       "/assets/pdf/2026/prpl26_tncs_261012.pdf",
@@ -63,7 +60,6 @@
       20,
       100,
       160,
-      200,
       380
     ],
     "cents_rates_seen": [],
