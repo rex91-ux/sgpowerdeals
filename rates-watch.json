@@ -1,33 +1,8 @@
 {
-  "last_run": "2026-10-13T03:07:26+00:00",
-  "status": "CHANGED",
-  "expected_baseline": "2026-09-07",
-  "changes": [
-    {
-      "field": "factsheet powerfix_36",
-      "was": "20260828(269.7)",
-      "now": "20261008(281)",
-      "was_rate_inc_gst": 29.4,
-      "now_rate_inc_gst": 30.63,
-      "severity": "repriced"
-    },
-    {
-      "field": "factsheet powerfix_24",
-      "was": "20260828(273.4)",
-      "now": "20261006(283.5)",
-      "was_rate_inc_gst": 29.8,
-      "now_rate_inc_gst": 30.9,
-      "severity": "repriced"
-    },
-    {
-      "field": "factsheet powerfix_12",
-      "was": "20260803(284.4)",
-      "now": "20261006(285.8)",
-      "was_rate_inc_gst": 31.0,
-      "now_rate_inc_gst": 31.15,
-      "severity": "repriced"
-    }
-  ],
+  "last_run": "2026-10-14T01:20:20+00:00",
+  "status": "UNCHANGED",
+  "expected_baseline": "2026-10-13",
+  "changes": [],
   "baselined_this_run": {},
   "tracked_but_never_seen": [
     "powerdot_6"
