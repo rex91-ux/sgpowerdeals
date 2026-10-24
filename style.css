@@ -312,3 +312,73 @@ footer a{color:#8FC4C2}
   .tot b{font-size:16px}
   .vacts>*{flex:1 1 auto;text-align:center}
 }
+
+/* ---------- retailer pages v2: condensed hero ---------- */
+.rhero{background:var(--teal-deep);color:#fff;padding:30px 0 30px;position:relative;overflow:hidden}
+.rhero::after{content:"";position:absolute;right:-140px;top:-140px;width:380px;height:380px;border-radius:50%;
+  background:radial-gradient(circle,rgba(232,163,23,.2),rgba(232,163,23,0) 70%);pointer-events:none}
+.rhero .wrap{position:relative;z-index:1}
+.rhero .asof{margin-bottom:18px}
+.rtitle{font:700 clamp(28px,6vw,42px)/1.08 var(--sans);letter-spacing:-.03em;margin:0 0 12px}
+.rtitle em{font-style:normal;color:var(--amber)}
+.rsub{font-size:17px;line-height:1.5;color:#CFE3E1;margin:0 0 20px;max-width:58ch}
+.rsub b{color:#fff;font-weight:600}
+.rslab{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:16px;
+  padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px 20px;flex-wrap:wrap;margin:0 0 12px}
+.rslab .cap{font:600 10.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:#8FC4C2;margin-bottom:8px}
+.rslab .val{font:600 clamp(26px,6vw,34px)/1 var(--mono);letter-spacing:.06em}
+.rslab .acts>*{padding:13px 18px;font-size:15px}
+.rslab .said{flex-basis:100%;margin-top:0}
+.rhero .vstats{margin:0}
+.rhero .vstat{padding:13px 14px 12px}
+.rhero .vstat .n{font-size:clamp(20px,4.4vw,26px);margin-bottom:6px}
+.rhero .vstat .l{font-size:12.5px}
+
+/* verdict + quick steps */
+.vsec{padding:30px 0;border-bottom:1px solid var(--rule)}
+h2.sm{font:700 21px/1.2 var(--sans);letter-spacing:-.02em;margin:0 0 14px}
+.verdict{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.vcol{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:14px 16px}
+.vcol .t{font:700 13px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.vcol.yes{border-top:4px solid #2E7D5B}.vcol.yes .t{color:#2E7D5B}
+.vcol.no{border-top:4px solid var(--clay)}.vcol.no .t{color:var(--clay)}
+.vcol ul{margin:0;padding:0;list-style:none;display:grid;gap:7px}
+.vcol li{font-size:14.5px;line-height:1.4;padding-left:16px;position:relative}
+.vcol li::before{content:"";position:absolute;left:0;top:.55em;width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.35}
+.vcol li b{font-weight:600}
+.qsteps{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;counter-reset:q}
+.qsteps li{counter-increment:q;background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:12px 14px;font-size:13.5px;line-height:1.4;color:var(--muted)}
+.qsteps li::before{content:counter(q);display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;
+  background:var(--teal);color:#fff;font:600 12px/1 var(--mono);margin-bottom:8px}
+.qsteps li b{display:block;color:var(--ink);font-size:14.5px;margin-bottom:2px}
+.vsec .scroll{margin-top:0}
+.ranklink{display:inline-block;margin-top:12px;font:600 14.5px/1.3 var(--sans);color:var(--teal);text-decoration:none}
+.ranklink:hover{text-decoration:underline}
+
+/* collapsed full details */
+.more{background:var(--card);border:1px solid var(--rule);border-radius:14px;margin-bottom:8px;overflow:hidden}
+.more>summary{cursor:pointer;list-style:none;padding:14px 44px 14px 16px;font:600 15.5px/1.35 var(--sans);position:relative}
+.more>summary::-webkit-details-marker{display:none}
+.more>summary::after{content:"+";position:absolute;right:16px;top:50%;transform:translateY(-50%);
+  width:auto;height:auto;border:0;font:500 22px/1 var(--mono);color:var(--teal)}
+.more[open]>summary::after{content:"–";transform:translateY(-50%)}
+.more{border-bottom:1px solid var(--rule)}
+.more>.in{padding:0 16px 16px}
+.more .in h3{font-size:17px}
+.more .in .chart{margin-top:8px}
+
+@media (max-width:620px){
+  .rhero{padding:22px 0 24px}
+  .rslab{padding:14px}
+  .rslab .acts{width:100%}
+  .verdict,.qsteps{grid-template-columns:1fr}
+  .qsteps li{display:grid;grid-template-columns:30px 1fr;column-gap:8px;padding:11px 12px}
+  .qsteps li::before{margin:0;grid-row:span 2}
+  .rhero .vstats{grid-template-columns:repeat(3,1fr);gap:6px}
+  .rhero .vstat.hi{grid-column:auto}
+  .rhero .vstat{padding:10px 9px}
+  .rhero .vstat .n{font-size:18px}
+  .rhero .vstat .l{font-size:11.5px}
+}
+.more .in .lede{font-size:16px}
+.more .in .notice{margin-top:4px}
