@@ -7,7 +7,7 @@
 
   function flash(btn) {
     if (said) {
-      said.textContent = 'Copied — now paste it at sign-up.';
+      said.textContent = said.getAttribute('data-msg') || 'Copied — now paste it at sign-up.';
       setTimeout(function () { said.textContent = ''; }, 4000);
     }
     var t = btn.textContent;
