@@ -10,6 +10,10 @@
 
   "compatibility_date": "2026-08-01",
 
+  // Small script for the click counter: handles /api/* only; every other
+  // request goes straight to the static files below.
+  "main": "worker.js",
+
   // A static-assets-only Worker: no script, no build step. The repo root is
   // the site root, which is deliberate — the scheduled Claude tasks fetch
   // index.html and pacificlight-referral-code/index.html from the repo root
@@ -17,10 +21,17 @@
   // would break both tasks' URLs.
   "assets": {
     "directory": "./",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"],
 
     // Serves /pacificlight-referral-code/ from
     // pacificlight-referral-code/index.html, which is how the site's internal
     // links and sitemap are written.
     "html_handling": "auto-trailing-slash"
-  }
+  },
+
+  // Shared click-count database for both sites (Cloudflare D1, free tier).
+  "d1_databases": [
+    { "binding": "DB", "database_name": "deals-clicks", "database_id": "4ecabdf7-f159-4c23-9471-bb2a53ac80fc" }
+  ]
 }
