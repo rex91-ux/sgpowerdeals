@@ -401,3 +401,11 @@ h2.sm{font:700 21px/1.2 var(--sans);letter-spacing:-.02em;margin:0 0 14px}
   .sister .h{font-size:16.5px}
   .sister .d{font-size:12.5px;line-height:1.45}
 }
+/* wide screens (laptops and up): use more of the width; keep prose at reading width; dock the side card next to the content */
+@media (min-width:1240px){
+  :root{--w:min(1080px, calc(100vw - 500px))}
+  .wrap{max-width:var(--w)}
+  .faq p,details.more p,.disc{max-width:78ch}
+  footer p{max-width:80ch}
+  .sister{left:calc(50% + var(--w) / 2 + 12px);right:auto}
+}
