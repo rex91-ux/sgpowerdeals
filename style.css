@@ -391,3 +391,13 @@ h2.sm{font:700 21px/1.2 var(--sans);letter-spacing:-.02em;margin:0 0 14px}
 .sister .k{font:600 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
 .sister .h{font:700 19px/1.25 var(--sans);letter-spacing:-.015em;margin-bottom:6px}
 .sister .d{font-size:14px;line-height:1.45;color:#CFE3E1}
+/* sister link: navy (sginvestdeals brand) so it stands apart; side card on wide screens */
+.sister{background:linear-gradient(135deg,#0F2A5C,#1E4FA3);box-shadow:0 12px 28px -14px rgba(15,42,92,.75)}
+.sister .d{color:#D3DDF2}
+@media (min-width:1240px){
+  .sister{position:fixed;top:140px;right:24px;width:210px;margin:0;padding:18px;z-index:30}
+  .sister:hover{transform:translateY(-3px)}
+  .sister .k{font-size:10px;letter-spacing:.14em;line-height:1.35}
+  .sister .h{font-size:16.5px}
+  .sister .d{font-size:12.5px;line-height:1.45}
+}
