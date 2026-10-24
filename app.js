@@ -1,3 +1,22 @@
+/* Click counter: page views, code copies, sign-up clicks, other-site card. Sends one tiny beacon to /api/c; no cookies, no personal data. */
+(function () {
+  function send(a) {
+    try {
+      var body = JSON.stringify({ a: a, p: location.pathname });
+      if (navigator.sendBeacon) navigator.sendBeacon('/api/c', body);
+      else fetch('/api/c', { method: 'POST', body: body, keepalive: true });
+    } catch (e) {}
+  }
+  send('view');
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('a,button') : null;
+    if (!t) return;
+    if (t.matches('[data-copy]')) send('copy');
+    else if (t.matches('a.sister')) send('sister');
+    else if (t.matches('.rslab a, .dock a, a.b-go, a.b-copy')) send('signup');
+  }, true);
+})();
+
 /* SG Power Deals — shared behaviour: copy-to-clipboard + chart fill on scroll */
 (function () {
   var el = document.getElementById('code');
