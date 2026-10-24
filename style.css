@@ -382,3 +382,12 @@ h2.sm{font:700 21px/1.2 var(--sans);letter-spacing:-.02em;margin:0 0 14px}
 }
 .more .in .lede{font-size:16px}
 .more .in .notice{margin-top:4px}
+
+/* sister-site banner (sginvestdeals.com) */
+.sister{display:block;margin-top:16px;padding:18px 20px;border-radius:16px;text-decoration:none;
+  color:#fff;background:linear-gradient(120deg,var(--teal-deep),var(--teal));
+  box-shadow:0 10px 24px -16px rgba(8,62,67,.7);transition:transform .15s ease}
+.sister:hover{transform:translateY(-2px)}
+.sister .k{font:600 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+.sister .h{font:700 19px/1.25 var(--sans);letter-spacing:-.015em;margin-bottom:6px}
+.sister .d{font-size:14px;line-height:1.45;color:#CFE3E1}
