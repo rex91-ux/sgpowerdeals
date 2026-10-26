@@ -409,3 +409,29 @@ h2.sm{font:700 21px/1.2 var(--sans);letter-spacing:-.02em;margin:0 0 14px}
   footer p{max-width:80ch}
   .sister{left:calc(50% + var(--w) / 2 + 12px);right:auto}
 }
+
+/* ---------- homepage hero v3: overview first, ranking, then CTA (26 Oct 2026) ---------- */
+.vsub{font-size:clamp(16px,2.2vw,19px);line-height:1.45;color:#D5E8E6;max-width:60ch;margin:-10px 0 24px}
+.vrank{list-style:none;margin:0 0 24px;padding:0;max-width:680px;display:grid;gap:6px}
+.vrank li>a,.vrank li.sp{display:grid;grid-template-columns:28px 1fr auto auto;align-items:center;gap:12px;
+  padding:11px 14px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#fff;text-decoration:none}
+.vrank li>a:hover{background:rgba(255,255,255,.11)}
+.vrank .rk{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font:600 12.5px/1 var(--mono);background:rgba(255,255,255,.14);color:inherit;margin:0}
+.vrank .who b{display:block;font-weight:600;font-size:16px}
+.vrank .who small{display:block;font-size:13px;color:#B9DAD8;margin-top:2px}
+.vrank .tot{font:600 17px/1 var(--mono);text-align:right}
+.vrank .tag{font:600 11px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;background:#241800;color:var(--amber);padding:5px 8px;border-radius:5px}
+.vrank li:not(.top) .tot{grid-column:4}
+.vrank li.top>a{background:var(--amber);border-color:var(--amber);color:#241800}
+.vrank li.top .who small{color:#4A3500}
+.vrank li.top .rk{background:rgba(36,24,0,.14)}
+.vrank li.sp{background:transparent;border-style:dashed;color:#B9DAD8}
+.vrank li.sp .who b{font-weight:500}
+.h-pri{background:var(--amber);color:#241800}
+.h-sec{background:transparent;color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.35)}
+@media (max-width:520px){
+  .vrank li>a,.vrank li.sp{grid-template-columns:24px 1fr auto;gap:10px;padding:10px 12px}
+  .vrank .tag{display:none}
+  .vrank li:not(.top) .tot{grid-column:auto}
+  .vrank .tot{font-size:15px}
+}

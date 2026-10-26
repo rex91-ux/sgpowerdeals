@@ -10,8 +10,9 @@
      <script id="rates">. When a rate or rebate moves:
        1. edit the JSON (rate, rebate, note, codes)
        2. update "asof" in the JSON AND the hero eyebrow date
-       3. re-check the hero verdict sentence and figures still match
-          what the leaderboard computes at 388.5 kWh / 36 months
+       3. the hero mini-ranking (.vrank) and the "save ≈ $X" headline are
+          STATIC — update them to match what the leaderboard computes at
+          388.5 kWh / 36 months (incl. the SP row)
        4. the static rows inside #board are only a no-JS fallback;
           regenerate them or leave them (JS replaces them on load)
      Counting rule: total = rate x usage x term, minus the best rebate
@@ -50,20 +51,23 @@
 
 <header class="vhero"><div class="wrap">
   <p class="asof"><span class="dot"></span><span>Rates checked <b>24 Oct 2026</b> against each retailer’s own factsheets</span></p>
-  <p class="vlabel">Best electricity deal in Singapore right now</p>
-  <h1 class="vtitle">PacificLight <em>Savvy Saver 36</em></h1>
+  <p class="vlabel">Switching electricity in Singapore · 4 retailers compared</p>
+  <h1 class="vtitle">Still paying SP’s&nbsp;31.16¢? <em>Switch and save ≈&nbsp;$584.*</em></h1>
+  <p class="vsub">Fixed-price plans from PacificLight, Senoko, Tuas Power and Keppel, ranked by what you’d actually pay — plus the referral code that takes a bit more off.</p>
 
-  <div class="vstats">
-    <div class="vstat"><div class="n">28.90¢</div><div class="l">per kWh, fixed 3 years</div></div>
-    <div class="vstat"><div class="n">$268</div><div class="l">rebate with code GETBACK36</div></div>
-    <div class="vstat hi"><div class="n">≈ $584</div><div class="l">less than SP’s tariff over 3 years*</div></div>
-  </div>
+  <ol class="vrank" aria-label="Cheapest 3-year plans right now">
+    <li class="top"><a href="/pacificlight-referral-code/"><span class="rk">1</span><span class="who"><b>PacificLight</b><small>Savvy Saver 36 · 28.90¢</small></span><span class="tag">Cheapest now</span><span class="tot">$3,774</span></a></li>
+    <li><a href="/senoko-energy-referral-code/"><span class="rk">2</span><span class="who"><b>Senoko</b><small>LifePower36 Friends rate · 28.95¢</small></span><span class="tot">$3,879</span></a></li>
+    <li><a href="/tuas-power-referral-code/"><span class="rk">3</span><span class="who"><b>Tuas Power</b><small>PowerFIX 36 · 30.63¢</small></span><span class="tot">$4,124</span></a></li>
+    <li><a href="/keppel-electric-referral-code/"><span class="rk">4</span><span class="who"><b>Keppel</b><small>FIXED36 · 30.63¢</small></span><span class="tot">$4,184</span></a></li>
+    <li class="sp"><span class="rk">–</span><span class="who"><b>SP Group</b><small>Regulated tariff, if you never switch · 31.16¢</small></span><span class="tot">$4,358</span></li>
+  </ol>
 
   <div class="vacts">
-    <a class="b-copy" href="/pacificlight-referral-code/">See the PacificLight deal</a>
-    <a class="b-go" href="#compare">Compare all four ↓</a>
+    <a class="h-pri" href="#compare">Compare at my usage</a>
+    <a class="h-sec" href="#codes">Get the codes ↓</a>
   </div>
-  <p class="vfine">*4-room HDB flat at 388.5 kWh a month. GETBACK36 is limited to PacificLight’s first 100 sign-ups between 15 Oct and 31 Dec 2026 — if it’s gone, Senoko via referral is the next-best deal below.</p>
+  <p class="vfine">*Total over 3 years for a 4-room HDB flat (388.5 kWh a month), after the best rebate you can get by entering a code. PacificLight’s GETBACK36 ($268) is limited to its first 100 sign-ups between 15 Oct and 31 Dec 2026 — if it’s gone, Senoko via referral is the next-best deal.</p>
 </div></header>
 
 <section class="glance"><div class="wrap">
@@ -124,7 +128,7 @@
   <p class="fine">Rates include 9% GST and are read from each retailer’s own site or factsheet on 24 Oct 2026. Rebates assume you keep the contract to the end — every retailer claws them back if you leave early. Not counted: card-linked rebates (Maybank, Trust, Tiger BOSS), gifts, miles, and Tuas’s S$20 referral, which Tuas says may be “revised” when combined with its campaign. Geneco is also at 29.00¢ on 2 years but isn’t covered here.</p>
 </div></section>
 
-<section class="codes"><div class="wrap">
+<section id="codes" class="codes"><div class="wrap">
   <p class="kicker">Working codes</p>
   <h2>Referral codes for all four</h2>
   <p class="lede">Each page spells out which plans the code works on, whether it stacks with a promo, and when it’s not worth using — so you don’t find out on your third bill.</p>
