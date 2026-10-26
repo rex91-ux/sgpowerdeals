@@ -1,5 +1,19 @@
-/* Click counter: page views, code copies, sign-up clicks, other-site card. Sends one tiny beacon to /api/c; no cookies, no personal data. */
+/* Click counter: page views, code copies, sign-up clicks, other-site card. Sends one tiny beacon to /api/c; no cookies, no personal data. Also loads Cloudflare Web Analytics. */
 (function () {
+  /* Owner opt-out: visit any page with ?notrack=1 once (per browser) to stop counting your own visits; ?notrack=0 undoes it. */
+  try {
+    if (/[?&]notrack=1/.test(location.search)) localStorage.setItem('notrack', '1');
+    if (/[?&]notrack=0/.test(location.search)) localStorage.removeItem('notrack');
+    if (localStorage.getItem('notrack')) return;
+  } catch (e) {}
+  /* Cloudflare Web Analytics (cookieless): shows where visitors come from */
+  try {
+    var cf = document.createElement('script');
+    cf.type = 'module';
+    cf.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    cf.setAttribute('data-cf-beacon', '{"token": "53f3c99ec48642dabce68d51114a6d8b"}');
+    document.head.appendChild(cf);
+  } catch (e) {}
   function send(a) {
     try {
       var body = JSON.stringify({ a: a, p: location.pathname });
