@@ -4,7 +4,7 @@
 //   GET  /api/stats?k=…   — private stats page (k must equal the STATS_KEY secret)
 // Counts live in the shared D1 database "deals-clicks" (binding DB).
 
-const ACTIONS = ['view', 'copy', 'signup', 'sister'];
+const ACTIONS = ['view', 'copy', 'signup', 'sister', 'tab'];
 const SCHEMA = 'CREATE TABLE IF NOT EXISTS clicks (day TEXT NOT NULL, site TEXT NOT NULL, page TEXT NOT NULL, action TEXT NOT NULL, n INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (day, site, page, action))';
 let ready = false;
 async function ensure(env) { if (!ready) { await env.DB.prepare(SCHEMA).run(); ready = true; } }

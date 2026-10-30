@@ -19,6 +19,7 @@
     if (!t) return;
     if (t.matches('[data-copy]')) send('copy');
     else if (t.matches('a.sister')) send('sister');
+    else if (t.matches('a.ps-tab')) send('tab');
     else if (t.matches('.rslab a, .dock a, a.b-go, a.b-copy')) send('signup');
   }, true);
 })();
