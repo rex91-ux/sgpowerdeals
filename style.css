@@ -435,3 +435,12 @@ h2.sm{font:700 21px/1.2 var(--sans);letter-spacing:-.02em;margin:0 0 14px}
   .vrank li:not(.top) .tot{grid-column:auto}
   .vrank .tot{font-size:15px}
 }
+
+/* homepage side stack: other-site card + Tab invite card (31 Oct 2026) */
+.sister.xtab{background:linear-gradient(135deg,#2A1F4D,#5B3FA8);box-shadow:0 12px 28px -14px rgba(42,31,77,.75)}
+.sister.xtab .d{color:#DDD5F3}
+@media (min-width:1240px){
+  .sidestack{position:fixed;top:140px;left:calc(50% + var(--w) / 2 + 12px);width:210px;z-index:30;display:grid;gap:12px;
+    max-height:calc(100vh - 160px);overflow-y:auto;scrollbar-width:none}
+  .sidestack .sister{position:static;width:auto;margin:0}
+}
