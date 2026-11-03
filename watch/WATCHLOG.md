@@ -75,3 +75,4 @@ Appended by `.github/workflows/rates-watch.yml`. Every run writes a line, includ
 | 2026-10-31T01:44:28+00:00 | UNCHANGED | no change |
 | 2026-11-01T01:22:31+00:00 | UNCHANGED | no change |
 | 2026-11-02T01:42:46+00:00 | CHANGED | factsheet powerfix_36: 20261008(281) -> 20261006(281); factsheet powerfix_24: 20261006(283.5) -> 20261008(283.5); factsheet powerfix_25: 20260615(300) -> 20261029(300); rebate PowerFIX 24: $100 -> not found on promotions page |
+| 2026-11-03T03:38:45+00:00 | CHANGED | factsheet powerfix_36: 20261008(281) -> 20261006(281); factsheet powerfix_24: 20261006(283.5) -> 20261008(283.5); factsheet powerfix_25: 20260615(300) -> 20261029(300); rebate PowerFIX 24: $100 -> not found on promotions page |
