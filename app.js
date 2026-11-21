@@ -24,14 +24,21 @@
   }, true);
 })();
 
-/* SG Power Deals — shared behaviour: copy-to-clipboard + chart fill on scroll */
+/* SG Power Deals — shared behaviour: copy-to-clipboard + chart fill on scroll.
+   A button copies its own data-copy value if it has one (guide-page code boxes, .gc),
+   otherwise the page's #code. Status text goes to the box's .said, else #said. */
 (function () {
-  var el = document.getElementById('code');
-  if (!el) return;
-  var code = el.textContent.trim();
-  var said = document.getElementById('said');
+  var main = document.getElementById('code');
+  var mainSaid = document.getElementById('said');
+
+  function codeFor(btn) { return btn.getAttribute('data-copy') || (main ? main.textContent.trim() : ''); }
+  function saidFor(btn) {
+    var box = btn.closest ? btn.closest('.gc') : null;
+    return (box && box.querySelector('.said')) || mainSaid;
+  }
 
   function flash(btn) {
+    var said = saidFor(btn);
     if (said) {
       said.textContent = said.getAttribute('data-msg') || 'Copied — now paste it at sign-up.';
       setTimeout(function () { said.textContent = ''; }, 4000);
@@ -41,7 +48,7 @@
     setTimeout(function () { btn.textContent = t; }, 2200);
   }
 
-  function fallback(btn) {
+  function fallback(btn, code) {
     var t = document.createElement('textarea');
     t.value = code;
     t.setAttribute('readonly', '');
@@ -49,16 +56,18 @@
     document.body.appendChild(t);
     t.select();
     try { document.execCommand('copy'); flash(btn); }
-    catch (e) { if (said) said.textContent = 'Copy manually: ' + code; }
+    catch (e) { var said = saidFor(btn); if (said) said.textContent = 'Copy manually: ' + code; }
     document.body.removeChild(t);
   }
 
   Array.prototype.forEach.call(document.querySelectorAll('[data-copy]'), function (btn) {
     btn.addEventListener('click', function () {
+      var code = codeFor(btn);
+      if (!code) return;
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(code).then(function () { flash(btn); },
-                                                function () { fallback(btn); });
-      } else { fallback(btn); }
+                                                function () { fallback(btn, code); });
+      } else { fallback(btn, code); }
     });
   });
 
