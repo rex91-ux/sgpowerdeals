@@ -43,9 +43,9 @@
       said.textContent = said.getAttribute('data-msg') || 'Copied — now paste it at sign-up.';
       setTimeout(function () { said.textContent = ''; }, 4000);
     }
-    var t = btn.textContent;
-    btn.textContent = 'Copied';
-    setTimeout(function () { btn.textContent = t; }, 2200);
+    var t = btn.innerHTML;
+    btn.textContent = btn.classList.contains('vc') ? 'Copied ✓' : 'Copied';
+    setTimeout(function () { btn.innerHTML = t; }, 2200);
   }
 
   function fallback(btn, code) {
