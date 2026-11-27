@@ -476,7 +476,9 @@ h2.sm{font:700 21px/1.2 var(--sans);letter-spacing:-.02em;margin:0 0 14px}
 }
 
 /* hero: referral code next to each plan (27 Nov 2026) */
-.vhint{font:500 13px/1.4 var(--sans);color:#B9DAD8;margin:0 0 8px}
+.vhead{display:grid;grid-template-columns:1fr 132px;gap:6px;max-width:680px;margin:0 0 8px;
+  font:600 11px/1.2 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#8FC4C2}
+.vhead span:last-child{text-align:center;color:var(--amber)}
 .vrank li:not(.sp){display:grid;grid-template-columns:1fr 132px;gap:6px}
 .vrank li.sp{margin-right:138px}
 .vc{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;border-radius:12px;
@@ -491,7 +493,7 @@ h2.sm{font:700 21px/1.2 var(--sans);letter-spacing:-.02em;margin:0 0 14px}
 .vrank li.top .vc small{color:#4A3500}
 .vrank li.top .vc:hover{filter:brightness(1.06)}
 @media (max-width:520px){
-  .vhint{font-size:12.5px}
+  .vhead{grid-template-columns:1fr 104px;gap:5px;font-size:10px;letter-spacing:.1em}
   .vrank li:not(.sp){grid-template-columns:1fr 104px;gap:5px}
   .vrank li.sp{margin-right:109px}
   .vc,.vrank li>a.vc{padding:6px 4px}
