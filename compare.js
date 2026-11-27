@@ -15,6 +15,40 @@
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) {
     return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
+  // codes for the plan shown in each row: copy buttons (or a link), right in the board
+  function chips(list) {
+    if (!list || !list.length) return '';
+    return '<div class="rcodes">' + list.map(function (k) {
+      var cls = 'rc' + (k.mine ? ' mine' : '');
+      if (k.href) return '<a class="' + cls + ' b-go" href="' + esc(k.href) +
+        '" rel="nofollow sponsored noopener" target="_blank"><span>' + esc(k.l) + '</span><b>' +
+        esc(k.c) + '</b><em>Open ↗</em></a>';
+      return '<button class="' + cls + '" type="button" data-copy="' + esc(k.c) + '"><span>' +
+        esc(k.l) + '</span><b>' + esc(k.c) + '</b><em>Copy</em></button>';
+    }).join('') + '</div>';
+  }
+
+  function copied(btn) {
+    var em = btn.querySelector('em');
+    btn.classList.add('done'); if (em) em.textContent = 'Copied ✓';
+    setTimeout(function () { btn.classList.remove('done'); if (em) em.textContent = 'Copy'; }, 2200);
+  }
+  board.addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('button.rc') : null;
+    if (!btn) return;
+    var code = btn.getAttribute('data-copy');
+    function fallback() {
+      var t = document.createElement('textarea');
+      t.value = code; t.setAttribute('readonly', ''); t.style.cssText = 'position:absolute;left:-9999px';
+      document.body.appendChild(t); t.select();
+      try { document.execCommand('copy'); copied(btn); } catch (err) {}
+      document.body.removeChild(t);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(code).then(function () { copied(btn); }, fallback);
+    } else { fallback(); }
+  });
+
   function render() {
     var units = kwh * term;
     var sp = units * D.sp / 100;
@@ -41,7 +75,7 @@
         '<small>' + esc(x.o.note) + '</small>' +
         '<div class="sbar"><i style="width:' + w.toFixed(1) + '%"></i></div></div>' +
         '<div class="tot"><b>' + money(x.tot) + '</b><span>' + diff + '</span></div>' +
-        '</a></li>';
+        '</a>' + chips(x.o.codes) + '</li>';
     }).join('');
 
     if (spTot) spTot.textContent = money(sp);

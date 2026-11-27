@@ -456,3 +456,21 @@ h2.sm{font:700 21px/1.2 var(--sans);letter-spacing:-.02em;margin:0 0 14px}
 .gc .acts{margin-top:auto}
 .gc .acts>*{padding:11px 16px;font-size:14.5px}
 .gc .said{margin-top:0}
+
+/* comparison board: copy-able codes in each row (27 Nov 2026) */
+.board .row .rcodes{grid-column:2/-1;display:flex;flex-wrap:wrap;gap:8px;margin-top:-2px}
+.rc{display:inline-flex;align-items:center;gap:8px;border:1.5px dashed #9DB8B5;background:var(--card);border-radius:9px;
+  padding:7px 10px;font:500 12px/1.2 var(--sans);color:var(--muted);cursor:pointer;text-decoration:none;text-align:left;
+  transition:background .12s ease,border-color .12s ease}
+.rc b{font:600 14px/1 var(--mono);letter-spacing:.04em;color:var(--ink)}
+.rc em{font:600 12px/1 var(--sans);font-style:normal;color:var(--teal);padding-left:8px;border-left:1px solid var(--rule)}
+.rc:hover{background:var(--teal-pale);border-color:var(--teal)}
+.rc.mine{border:1.5px solid var(--amber);background:var(--amber-pale)}
+.rc.mine span{color:#6B4A00}
+.rc.mine:hover{background:#FBE7BD}
+.rc.done em{color:#2E7D5B}
+@media (max-width:520px){
+  .board .row .rcodes{grid-column:1/-1}
+  .rc{flex:1 1 100%;justify-content:space-between}
+  .rc span{flex:1}
+}
