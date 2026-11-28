@@ -500,3 +500,8 @@ h2.sm{font:700 21px/1.2 var(--sans);letter-spacing:-.02em;margin:0 0 14px}
   .vc b{font-size:12px;letter-spacing:.02em}
   .vc small{font-size:9.5px}
 }
+
+/* top-nav link to the personal AI agents page (28 Nov 2026) */
+.mnav a.nav-ai{color:#5B3FA8;font-weight:600}
+.mnav a.nav-ai::before{content:"✦ ";color:var(--amber)}
+.mnav a.nav-ai:hover,.mnav a.nav-ai[aria-current="page"]{color:#2A1F4D}
